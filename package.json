@@ -10,16 +10,24 @@
     "url": "https://github.com/zckrs"
   },
   "files": [
-    "lib"
+    "index.js",
+    "generators"
   ],
-  "main": "lib/index.js",
+  "main": "index.js",
   "keywords": [
+    "yeoman-generator",
     "yeoman",
     "generator",
     "gulp",
     "gulpfile",
-    "fountain"
+    "fountain",
+    "cli"
   ],
+  "dependencies": {
+    "deep-extend": "^0.4.0",
+    "lodash": "^3.10.1",
+    "yeoman-generator": "^0.20.3"
+  },
   "devDependencies": {
     "gulp": "^3.6.0",
     "gulp-eslint": "^1.0.0",
