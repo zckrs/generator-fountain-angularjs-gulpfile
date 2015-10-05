@@ -32,6 +32,7 @@ module.exports = generators.Base.extend({
 
       extend(pkg, {
         devDependencies: {
+          'browser-sync': '~2.9.8',
           gulp: 'gulpjs/gulp#4.0',
           'gulp-angular-filesort': '~1.1.1',
           'gulp-angular-templatecache': '~1.7.0',
@@ -53,7 +54,16 @@ module.exports = generators.Base.extend({
           'gulp-sourcemaps': '~1.5.2',
           'gulp-uglify': '~1.4.1',
           'gulp-useref': '~1.3.0',
-          'gulp-util': '~3.0.6'
+          'gulp-util': '~3.0.6',
+          karma: '~0.13.9',
+          'karma-angular-filesort': '~1.0.0',
+          'karma-coverage': '~0.5.2',
+          'karma-jasmine': '~0.3.6',
+          'karma-ng-html2js-preprocessor': '~0.1.2',
+          'karma-phantomjs-launcher': '~0.2.1',
+          'main-bower-files': '~2.9.0',
+          'uglify-save-license': '~0.4.1',
+          wiredep: '~2.2.2'
         },
         scripts: {
           build: 'gulp',
