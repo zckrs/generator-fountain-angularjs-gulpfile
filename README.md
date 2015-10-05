@@ -1,3 +1,10 @@
+# WIP
+
+Should be used in parent generator.
+
+Actually only support SASS, JS, HTML.
+
+***
 # generator-fountain-gulpfile [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
 > Yeoman generator to serve gulpfile
 
