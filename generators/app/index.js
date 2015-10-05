@@ -1,5 +1,6 @@
 'use strict';
 
+var extend = require('deep-extend');
 var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
@@ -8,36 +9,73 @@ module.exports = generators.Base.extend({
 
     this.option('cssPreprocessor', {
       type: String,
-      required: true,
-      defaults: 'sass'
+      required: true
     });
 
     this.option('jsPreprocessor', {
       type: String,
-      required: true,
-      defaults: 'js'
+      required: true
     });
 
     this.option('htmlPreprocessor', {
       type: String,
-      required: true,
-      defaults: 'html'
+      required: true
     });
   },
 
   initializing: function () {
     // Pre set the default props from the information we have at this point
     this.props = {
-      cssPreprocessor: Boolean(this.options.cssPreprocessor),
-      jsPreprocessor: Boolean(this.options.jsPreprocessor),
-      htmlPreprocessor: Boolean(this.options.htmlPreprocessor)
+      cssPreprocessor: this.options.cssPreprocessor,
+      jsPreprocessor: this.options.jsPreprocessor,
+      htmlPreprocessor: this.options.htmlPreprocessor
     };
-
   },
 
   prompting: {
     askFor: function () {
+      var done = this.async();
 
+      var prompts = [{
+        when: !this.props.cssPreprocessor,
+        type: 'list',
+        name: 'cssPreprocessor',
+        message: 'Which CSS preprocessor do you want?',
+        choices: [
+          {
+            name: 'SASS',
+            value: 'sass'
+          }
+        ]
+      }, {
+        when: !this.props.jsPreprocessor,
+        type: 'list',
+        name: 'jsPreprocessor',
+        message: 'Which JS preprocessor do you want?',
+        choices: [
+          {
+            name: 'HTML',
+            value: 'html'
+          }
+        ]
+      }, {
+        when: !this.props.htmlPreprocessor,
+        type: 'list',
+        name: 'htmlPreprocessor',
+        message: 'Which HTML template engine would you want?',
+        choices: [
+          {
+            name: 'JS',
+            value: 'js'
+          }
+        ]
+      }];
+
+      this.prompt(prompts, function (props) {
+        this.props = extend(this.props, props);
+
+        done();
+      }.bind(this));
     }
   },
 

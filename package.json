@@ -1,9 +1,9 @@
 {
-  "name": "generator-fountain-gulpfile",
+  "name": "generator-fountain-angularjs-gulpfile",
   "version": "0.0.0",
   "description": "Yeoman generator to serve gulpfile",
   "homepage": "",
-  "repository": "fountainjs/generator-fountain-gulpfile",
+  "repository": "fountainjs/generator-fountain-angularjs-gulpfile",
   "author": {
     "name": "Mehdy Dara",
     "email": "mdara@eleven-labs.com",
