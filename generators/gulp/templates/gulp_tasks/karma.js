@@ -18,7 +18,7 @@ var pathSrcJs = [
 var karmaServer = {};
 var preprocessors = {};
 
-pathSrcHtml.forEach(function(path) {
+pathSrcHtml.forEach(function (path) {
   preprocessors[path] = ['ng-html2js'];
 });
 
@@ -34,14 +34,14 @@ gulp.task('karma:single-run', karmaSingleRun);
 gulp.task('karma:auto-run', karmaAutoRun);
 
 function karmaSingleRun(done) {
-  pathSrcJs.forEach(function(path) {
+  pathSrcJs.forEach(function (path) {
     preprocessors[path] = ['coverage'];
   });
 
-  reporters.push('coverage')
+  reporters.push('coverage');
 
-  karmaServer = new karma.Server(localConfig, function(failCount) {
-    done(failCount ? new Error("Failed " + failCount + " tests.") : null);
+  karmaServer = new karma.Server(localConfig, function (failCount) {
+    done(failCount ? new Error('Failed ' + failCount + ' tests.') : null);
   });
   karmaServer.start();
 }
@@ -50,8 +50,8 @@ function karmaAutoRun(done) {
   localConfig.singleRun = false;
   localConfig.autoWatch = true;
 
-  karmaServer = new karma.Server(localConfig, function(failCount) {
-    done(failCount ? new Error("Failed " + failCount + " tests.") : null);
+  karmaServer = new karma.Server(localConfig, function (failCount) {
+    done(failCount ? new Error('Failed ' + failCount + ' tests.') : null);
   });
   karmaServer.start();
 }

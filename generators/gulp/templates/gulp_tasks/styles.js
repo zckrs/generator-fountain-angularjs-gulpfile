@@ -23,7 +23,7 @@ function styles() {
   ], { read: false });
 
   var injectOptions = {
-    transform: function(filePath) {
+    transform: function (filePath) {
       filePath = filePath.replace(conf.paths.src + '/app/', '');
       return '@import "' + filePath + '";';
     },

@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  *  This file contains the variables used in other gulp files
  *  which defines tasks
@@ -40,10 +42,9 @@ exports.wiredep = {
 /**
  *  Common implementation for an error handler of a Gulp plugin
  */
-exports.errorHandler = function(title) {
-  'use strict';
+exports.errorHandler = function (title) {
 
-  return function(err) {
+  return function (err) {
     gutil.log(gutil.colors.red('[' + title + ']'), err.toString());
     this.emit('end');
   };

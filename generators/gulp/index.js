@@ -1,4 +1,5 @@
 'use strict';
+
 var extend = require('deep-extend');
 var generators = require('yeoman-generator');
 
