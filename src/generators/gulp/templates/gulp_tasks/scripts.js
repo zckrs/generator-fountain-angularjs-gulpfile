@@ -1,5 +1,3 @@
-'use strict';
-
 var joinPath = require('path').join;
 
 var gulp = require('gulp');

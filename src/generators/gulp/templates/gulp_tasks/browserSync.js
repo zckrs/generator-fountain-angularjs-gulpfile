@@ -1,4 +1,3 @@
-'use strict';
 
 var joinPath = require('path').join;
 
