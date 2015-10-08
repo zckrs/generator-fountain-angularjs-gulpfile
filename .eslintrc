@@ -1,8 +1,12 @@
 {
   "extends": "eslint:recommended",
+  "ecmaFeatures": {
+    "modules": true
+  },
   "env": {
     "node": true,
-    "mocha": true
+    "mocha": true,
+    "es6": true
   },
   "rules": {
     "array-bracket-spacing": [
