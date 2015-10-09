@@ -1,35 +1,37 @@
-var joinPath = require('path').join;
+import 'babel-core/polyfill';
+import { join as pathsJoin } from 'path';
 
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var browserSync = require('browser-sync');
-var wiredep = require('wiredep').stream;
-var extend = require('deep-extend');
+import gulp from 'gulp';
+import browserSync from 'browser-sync';
+import gulpLoadPlugins from 'gulp-load-plugins';
+import { stream as wiredep } from 'wiredep';
 
-var conf = require('./gulpconf');
+import * as conf from './gulpconf';
+
+const $ = gulpLoadPlugins();
 
 gulp.task('inject', inject);
 
 function inject() {
-  var injectStyles = gulp.src(joinPath(conf.paths.tmp, '/index.css'), { read: false });
+  let injectStyles = gulp.src(pathsJoin(conf.paths.tmp, '/index.css'), { read: false });
 
-  var injectScripts = gulp.src([
-    joinPath(conf.paths.src, '/app/**/*.module.js'),
-    joinPath(conf.paths.src, '/app/**/*.js'),
-    joinPath('!' + conf.paths.src, '/app/**/*.spec.js'),
-    joinPath('!' + conf.paths.src, '/app/**/*.mock.js')
+  let injectScripts = gulp.src([
+    pathsJoin(conf.paths.src, '/app/**/*.module.js'),
+    pathsJoin(conf.paths.src, '/app/**/*.js'),
+    pathsJoin('!' + conf.paths.src, '/app/**/*.spec.js'),
+    pathsJoin('!' + conf.paths.src, '/app/**/*.mock.js')
   ])
   .pipe($.angularFilesort()).on('error', conf.errorHandler('AngularFilesort'));
 
-  var injectOptions = {
+  let injectOptions = {
     ignorePath: [conf.paths.src, conf.paths.tmp],
     addRootSlash: false
   };
 
-  return gulp.src(joinPath(conf.paths.src, '/index.html'))
+  return gulp.src(pathsJoin(conf.paths.src, '/index.html'))
     .pipe($.inject(injectStyles, injectOptions))
     .pipe($.inject(injectScripts, injectOptions))
-    .pipe(wiredep(extend({}, conf.wiredep)))
+    .pipe(wiredep(Object.assign({}, conf.wiredep)))
     .pipe(gulp.dest(conf.paths.tmp))
     .pipe(browserSync.stream());
 }

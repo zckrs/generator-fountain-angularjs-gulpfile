@@ -31,6 +31,7 @@ export default class GeneratorFoutainAngularJSGulpfile extends Base {
 
         Object.assign(pkg, {
           devDependencies: {
+            'babel-core': '~5.8.25',
             'browser-sync': '~2.9.8',
             gulp: 'gulpjs/gulp#4.0',
             'gulp-angular-filesort': '~1.1.1',
@@ -76,8 +77,8 @@ export default class GeneratorFoutainAngularJSGulpfile extends Base {
 
       gulpfile() {
         this.fs.copyTpl(
-          this.templatePath('gulpfile.js'),
-          this.destinationPath('gulpfile.js')
+          this.templatePath('gulpfile.babel.js'),
+          this.destinationPath('gulpfile.babel.js')
         );
 
         this.fs.copyTpl(

@@ -1,12 +1,12 @@
-var joinPath = require('path').join;
+import { join as pathsJoin } from 'path';
 
-var gulp = require('gulp');
-var protractor = require('gulp-protractor').protractor;
-var browserSync = require('browser-sync');
+import gulp from 'gulp';
+import { protractor as protractor } from 'gulp-protractor';
+import browserSync from 'browser-sync';
 
-var conf = require('./gulpconf');
+import * as conf from './gulpconf';
 
-var argv = process.argv.slice(3); // forward args to protractor
+const argv = process.argv.slice(3); // forward args to protractor
 
 // Downloads the selenium webdriver
 gulp.task('webdriver_update', require('gulp-protractor').webdriver_update);
@@ -26,7 +26,7 @@ function runOnServe() {
     browser: []
   });
 
-  return gulp.src(joinPath(conf.paths.e2e, '/**/*.js'))
+  return gulp.src(pathsJoin(conf.paths.e2e, '/**/*.js'))
     .pipe(protractor({
       configFile: 'protractor.conf.js',
       args: argv
@@ -46,7 +46,7 @@ function runOnDist() {
     browser: []
   });
 
-  return gulp.src(joinPath(conf.paths.e2e, '/**/*.js'))
+  return gulp.src(pathsJoin(conf.paths.e2e, '/**/*.js'))
     .pipe(protractor({
       configFile: 'protractor.conf.js',
       args: argv

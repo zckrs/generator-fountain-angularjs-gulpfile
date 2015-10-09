@@ -1,14 +1,14 @@
-var joinPath = require('path').join;
+import { join as pathsJoin } from 'path';
 
-var gulp = require('gulp');
-var eslint = require('gulp-eslint');
+import gulp from 'gulp';
+import eslint from 'gulp-eslint';
 
-var conf = require('./gulpconf');
+import * as conf from './gulpconf';
 
 gulp.task('scripts', scripts);
 
 function scripts() {
-  return gulp.src(joinPath(conf.paths.src, '/app/**/*.js'))
+  return gulp.src(pathsJoin(conf.paths.src, '/app/**/*.js'))
     .pipe(eslint())
     .pipe(eslint.format());
 }
