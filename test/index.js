@@ -1,11 +1,15 @@
+/*eslint new-cap: 1*/
+
 import { join as pathsJoin } from 'path';
 import { test as helpers } from 'yeoman-generator';
 import assert from 'yeoman-assert';
 
-describe('yeoman-boilerplate-es6:app', () => {
+describe('foutain-angular-gulpfile:app', () => {
   before(function (done) {
     this.answers = {
-      applicationName: 'unicorn-es6'
+      cssPreprocessor: 'sass',
+      jsPreprocessor: 'js',
+      htmlPreprocessor: 'html'
     };
     helpers.run(pathsJoin(__dirname, '../generators/app'))
       .withPrompts(this.answers)
@@ -14,15 +18,34 @@ describe('yeoman-boilerplate-es6:app', () => {
 
   it('should creates file', () => {
     assert.file([
-      'README.md'
+      '.yo-rc.json',
+      'package.json',
+      'gulpfile.babel.js',
+      'gulp_tasks/browserSync.js',
+      'gulp_tasks/build.js',
+      'gulp_tasks/gulpconf.js',
+      'gulp_tasks/inject.js',
+      'gulp_tasks/karma.js',
+      'gulp_tasks/misc.js',
+      'gulp_tasks/protractor.js',
+      'gulp_tasks/scripts.js',
+      'gulp_tasks/styles.js'
     ]);
   });
 
-  it('should use application name to fill file', () => {
-    assert.fileContent('README.md', 'unicorn-es6');
+  it('should fill package.json dep', () => {
+    // TODO complete assert on package.json
+    assert.JSONFileContent('package.json', {
+      devDependencies: {
+        gulp: 'gulpjs/gulp#4.0'
+      }
+    });
   });
 
-  it('should have more unit test!', () => {
-    assert(false, 'we expected this package author to add actual unit tests.');
+  it('should fill files', () => {
+    // TODO complete assert on gulpfile and tasks
+    assert.fileContent('gulpfile.babel.js', 'gulp.registry(hub);');
   });
+
+
 });

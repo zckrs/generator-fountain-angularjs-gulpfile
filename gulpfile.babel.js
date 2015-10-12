@@ -32,9 +32,9 @@ function istanbulCover() {
 function mochaTest() {
   return gulp.src('test/**/*.js')
     .pipe(mocha({reporter: 'spec'}))
-    .on('error', function errorHandler(err) {
+    .once('error', function errorHandler(err) {
       gutil.log(gutil.colors.red('[Mocha]'), err.toString());
-      this.emit('end');
+      process.exit(1);
     })
     .pipe(istanbul.writeReports());
 }
