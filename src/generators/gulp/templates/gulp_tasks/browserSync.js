@@ -1,11 +1,9 @@
-'use strict';
+import { join as pathsJoin } from 'path';
 
-var joinPath = require('path').join;
+import gulp from 'gulp';
+import browserSync from 'browser-sync';
 
-var gulp = require('gulp');
-var browserSync = require('browser-sync');
-
-var conf = require('./gulpconf');
+import * as conf from './gulpconf';
 
 gulp.task('browser-sync', browserSyncServe);
 gulp.task('browser-sync:dist', browserSyncDist);
@@ -20,7 +18,7 @@ function browserSyncServe(done) {
     }
   });
 
-  gulp.watch(joinPath(conf.paths.src, '/app/**/*.html'), browserSync.reload);
+  gulp.watch(pathsJoin(conf.paths.src, '/app/**/*.html'), browserSync.reload);
 
   done();
 }

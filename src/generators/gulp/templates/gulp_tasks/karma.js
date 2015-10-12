@@ -1,31 +1,29 @@
-'use strict';
+import { join as pathsJoin } from 'path';
 
-var joinPath = require('path').join;
+import gulp from 'gulp';
+import karma from 'karma';
 
-var gulp = require('gulp');
-var karma = require('karma');
+import * as conf from './gulpconf';
 
-var conf = require('./gulpconf');
-
-var pathSrcHtml = [
-  joinPath(conf.paths.src, '/**/*.html')
+let pathSrcHtml = [
+  pathsJoin(conf.paths.src, '/**/*.html')
 ];
 
-var pathSrcJs = [
-  joinPath(conf.paths.src, '/**/!(*.spec).js')
+let pathSrcJs = [
+  pathsJoin(conf.paths.src, '/**/!(*.spec).js')
 ];
 
-var karmaServer = {};
-var preprocessors = {};
+let karmaServer = {};
+let preprocessors = {};
 
 pathSrcHtml.forEach(function (path) {
   preprocessors[path] = ['ng-html2js'];
 });
 
-var reporters = ['progress'];
+let reporters = ['progress'];
 
-var localConfig = {
-  configFile: joinPath(__dirname, '/../karma.conf.js'),
+let localConfig = {
+  configFile: pathsJoin(__dirname, '/../karma.conf.js'),
   reporters: reporters,
   preprocessors: preprocessors
 };

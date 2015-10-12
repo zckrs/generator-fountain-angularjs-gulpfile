@@ -1,17 +1,18 @@
-'use strict';
+import 'babel-core/polyfill';
+import { join as pathsJoin } from 'path';
 
-var joinPath = require('path').join;
+import gulp from 'gulp';
+import gulpLoadPlugins from 'gulp-load-plugins';
+import uglifySaveLicense from 'uglify-save-license';
 
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var uglifySaveLicense = require('uglify-save-license');
+import * as conf from './gulpconf';
 
-var conf = require('./gulpconf');
+const $ = gulpLoadPlugins();
 
 gulp.task('build', gulp.series(partials, build));
 
 function partials() {
-  return gulp.src(joinPath(conf.paths.src, '/app/**/*.html'))
+  return gulp.src(pathsJoin(conf.paths.src, '/app/**/*.html'))
     .pipe($.minifyHtml({
       empty: true,
       spare: true,
@@ -25,19 +26,19 @@ function partials() {
 }
 
 function build() {
-  var partialsInjectFile = gulp.src(joinPath(conf.paths.tmp, '/templateCacheHtml.js'), { read: false });
-  var partialsInjectOptions = {
+  let partialsInjectFile = gulp.src(pathsJoin(conf.paths.tmp, '/templateCacheHtml.js'), { read: false });
+  let partialsInjectOptions = {
     starttag: '<!-- inject:partials -->',
     ignorePath: conf.paths.tmp,
     addRootSlash: false
   };
 
-  var htmlFilter = $.filter('*.html', { restore: true });
-  var jsFilter = $.filter('**/*.js', { restore: true });
-  var cssFilter = $.filter('**/*.css', { restore: true });
-  var assets;
+  let htmlFilter = $.filter('*.html', { restore: true });
+  let jsFilter = $.filter('**/*.js', { restore: true });
+  let cssFilter = $.filter('**/*.css', { restore: true });
+  let assets;
 
-  return gulp.src(joinPath(conf.paths.tmp, '/index.html'))
+  return gulp.src(pathsJoin(conf.paths.tmp, '/index.html'))
     .pipe($.inject(partialsInjectFile, partialsInjectOptions))
     .pipe(assets = $.useref.assets({
       searchPath: [conf.paths.tmp, conf.paths.src]
@@ -66,5 +67,5 @@ function build() {
       conditionals: true
     }))
     .pipe(htmlFilter.restore)
-    .pipe(gulp.dest(joinPath(conf.paths.dist, '/')));
+    .pipe(gulp.dest(pathsJoin(conf.paths.dist, '/')));
 }

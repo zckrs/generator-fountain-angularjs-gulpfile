@@ -1,28 +1,28 @@
-'use strict';
+import 'babel-core/polyfill';
+import { join as pathsJoin } from 'path';
 
-var joinPath = require('path').join;
+import gulp from 'gulp';
+import browserSync from 'browser-sync';
+import gulpLoadPlugins from 'gulp-load-plugins';
+import { stream as wiredep } from 'wiredep';
 
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
-var browserSync = require('browser-sync');
-var wiredep = require('wiredep').stream;
-var extend = require('deep-extend');
+import * as conf from './gulpconf';
 
-var conf = require('./gulpconf');
+const $ = gulpLoadPlugins();
 
 gulp.task('styles', styles);
 
 function styles() {
-  var sassOptions = {
+  let sassOptions = {
     style: 'expanded'
   };
 
-  var injectFiles = gulp.src([
-    joinPath(conf.paths.src, '/app/**/*.scss'),
-    joinPath('!' + conf.paths.src, '/app/index.scss')
+  let injectFiles = gulp.src([
+    pathsJoin(conf.paths.src, '/app/**/*.scss'),
+    pathsJoin('!' + conf.paths.src, '/app/index.scss')
   ], { read: false });
 
-  var injectOptions = {
+  let injectOptions = {
     transform: function (filePath) {
       filePath = filePath.replace(conf.paths.src + '/app/', '');
       return '@import "' + filePath + '";';
@@ -33,10 +33,10 @@ function styles() {
   };
 
   return gulp.src([
-    joinPath(conf.paths.src, '/app/index.scss')
+    pathsJoin(conf.paths.src, '/app/index.scss')
   ])
     .pipe($.inject(injectFiles, injectOptions))
-    .pipe(wiredep(extend({}, conf.wiredep)))
+    .pipe(wiredep(Object.assign({}, conf.wiredep)))
     .pipe($.sourcemaps.init())
     .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))
     .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
