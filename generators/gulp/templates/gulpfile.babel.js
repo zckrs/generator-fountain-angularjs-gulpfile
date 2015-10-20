@@ -1,3 +1,5 @@
+/*eslint-env es6 */
+
 import { join as pathsJoin } from 'path';
 
 import gulp from 'gulp';
