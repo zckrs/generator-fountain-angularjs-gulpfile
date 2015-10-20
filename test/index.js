@@ -4,7 +4,7 @@ import { join as pathsJoin } from 'path';
 import { test as helpers } from 'yeoman-generator';
 import assert from 'yeoman-assert';
 
-describe('foutain-angular-gulpfile:app', () => {
+describe('fountain-angular-gulpfile:app', () => {
   before(function (done) {
     this.answers = {
       cssPreprocessor: 'sass',

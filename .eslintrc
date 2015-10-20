@@ -4,9 +4,7 @@
     "modules": true
   },
   "env": {
-    "node": true,
-    "mocha": true,
-    "es6": true
+    "node": true
   },
   "rules": {
     "array-bracket-spacing": [
