@@ -4,11 +4,11 @@ import gulp from 'gulp';
 import gutil from 'gulp-util';
 import eslint from 'gulp-eslint';
 import excludeGitignore from 'gulp-exclude-gitignore';
-// import nsp from 'gulp-nsp';
 import mocha from 'gulp-mocha';
 import istanbul from 'gulp-istanbul';
 
-gulp.task('default', gulp.series(eslintCheck, gulp.series(istanbulCover, mochaTest)));
+gulp.task('linter', eslintCheck);
+gulp.task('default', gulp.series('linter', gulp.series(istanbulCover, mochaTest)));
 
 function eslintCheck() {
   return gulp.src('**/*.js')
@@ -21,8 +21,7 @@ function eslintCheck() {
 function istanbulCover() {
   return gulp.src('generators/**/index.js')
     .pipe(istanbul({
-      includeUntested: true,
-      instrumenter: istanbul.Instrumenter
+      includeUntested: true
     }))
     .pipe(istanbul.hookRequire());
 }
@@ -36,7 +35,3 @@ function mochaTest() {
     })
     .pipe(istanbul.writeReports());
 }
-
-// function nodeSecurityProject(cb) {
-//   nsp('package.json', cb);
-// }
