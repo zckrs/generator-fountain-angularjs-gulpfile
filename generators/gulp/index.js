@@ -26,8 +26,7 @@ module.exports = generators.Base.extend({
   writing: {
     package: function () {
       var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-
-      extend(pkg, {
+      var newPkg = {
         devDependencies: {
           'babel-core': '^5.8.25',
           'browser-sync': '^2.9.8',
@@ -48,7 +47,6 @@ module.exports = generators.Base.extend({
           'gulp-replace': '^0.5.4',
           'gulp-rev': '^6.0.1',
           'gulp-rev-replace': '^0.4.2',
-          'gulp-sass': '^2.0.4',
           'gulp-sourcemaps': '^1.5.2',
           'gulp-uglify': '^1.4.1',
           'gulp-useref': '^1.3.0',
@@ -68,7 +66,13 @@ module.exports = generators.Base.extend({
           serve: 'gulp serve',
           test: 'gulp karma:single-run'
         }
-      });
+      };
+
+      if (this.options.cssPreprocessor === 'scss') {
+        newPkg.devDependencies['gulp-sass'] = '^2.0.4';
+      }
+
+      extend(pkg, newPkg);
 
       this.fs.writeJSON(this.destinationPath('package.json'), pkg);
     },
