@@ -33,7 +33,12 @@ if (process.env.CI === 'true') {
  *  to inject css preprocessor deps and js files in karma
  */
 exports.wiredep = {
+<% if (cssPreprocessor === 'css') { -%>
+  exclude: [/\/bootstrap\.js$/],
+<% } -%>
+<% if (cssPreprocessor === 'scss') { -%>
   exclude: [/\/bootstrap\.js$/, /\/bootstrap-sass\/.*\.js/, /\/bootstrap\.css/],
+<% } -%>
   directory: 'bower_components'
 };
 
