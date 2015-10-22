@@ -8,7 +8,7 @@ describe('fountain-angular-gulpfile:app', () => {
   describe('common assert', () => {
     before(function (done) {
       this.answers = {
-        cssPreprocessor: 'sass',
+        cssPreprocessor: 'scss',
         jsPreprocessor: 'js',
         htmlPreprocessor: 'html'
       };
