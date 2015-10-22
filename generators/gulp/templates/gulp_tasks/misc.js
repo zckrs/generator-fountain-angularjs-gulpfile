@@ -31,7 +31,7 @@ function other() {
 
   return gulp.src([
     pathsJoin(conf.paths.src, '/**/*'),
-    pathsJoin('!' + conf.paths.src, '/**/*.{html,css,js,scss}')
+    pathsJoin('!' + conf.paths.src, '/**/*.{html,css,js,<%- cssPreprocessor %>}')
   ])
     .pipe(fileFilter)
     .pipe(gulp.dest(conf.paths.dist));

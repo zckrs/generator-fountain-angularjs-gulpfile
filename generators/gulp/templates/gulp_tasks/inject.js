@@ -13,7 +13,11 @@ const $ = gulpLoadPlugins();
 gulp.task('inject', inject);
 
 function inject() {
+<% if (cssPreprocessor === 'css') { -%>
+  let injectStyles = gulp.src(pathsJoin(conf.paths.src, '/app/**/*.css'), { read: false });
+<% } else {-%>
   let injectStyles = gulp.src(pathsJoin(conf.paths.tmp, '/index.css'), { read: false });
+<% } -%>
 
   let injectScripts = gulp.src([
     pathsJoin(conf.paths.src, '/app/**/*.module.js'),

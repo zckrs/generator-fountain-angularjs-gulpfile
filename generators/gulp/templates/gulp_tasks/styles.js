@@ -12,14 +12,17 @@ const $ = gulpLoadPlugins();
 
 gulp.task('styles', styles);
 
+<% if (cssPreprocessor !== 'css') { -%>
 function styles() {
+<%   if (cssPreprocessor == 'scss') { -%>
   let sassOptions = {
     style: 'expanded'
   };
+<% } -%>
 
   let injectFiles = gulp.src([
-    pathsJoin(conf.paths.src, '/app/**/*.scss'),
-    pathsJoin('!' + conf.paths.src, '/app/index.scss')
+    pathsJoin(conf.paths.src, '/app/**/*.<%- cssPreprocessor %>'),
+    pathsJoin('!' + conf.paths.src, '/app/index.<%- cssPreprocessor %>')
   ], { read: false });
 
   let injectOptions = {
@@ -33,14 +36,23 @@ function styles() {
   };
 
   return gulp.src([
-    pathsJoin(conf.paths.src, '/app/index.scss')
+    pathsJoin(conf.paths.src, '/app/index.<%- cssPreprocessor %>')
   ])
     .pipe($.inject(injectFiles, injectOptions))
     .pipe(wiredep(Object.assign({}, conf.wiredep)))
     .pipe($.sourcemaps.init())
+<%   if (cssPreprocessor == 'scss') { -%>
     .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))
+<% } -%>
     .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest(conf.paths.tmp))
     .pipe(browserSync.stream());
 }
+<% } else { -%>
+function styles(done) {
+  $.util.log('Nothing to do for CSS');
+  browserSync.reload('*.css');
+  done();
+}
+<% } -%>
