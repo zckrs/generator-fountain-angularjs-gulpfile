@@ -44,7 +44,11 @@ module.exports = generators.Base.extend({
         choices: [
           {
             name: 'SASS',
-            value: 'sass'
+            value: 'scss'
+          },
+          {
+            name: 'CSS',
+            value: 'css'
           }
         ]
       }, {

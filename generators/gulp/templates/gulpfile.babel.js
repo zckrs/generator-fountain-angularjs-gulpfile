@@ -8,7 +8,16 @@ import HubRegistry from 'gulp-hub';
 import * as conf from './gulp_tasks/gulpconf';
 
 // Load some files into the registry
-const hub = new HubRegistry(['gulp_tasks/misc.js', 'gulp_tasks/build.js', 'gulp_tasks/styles.js', 'gulp_tasks/scripts.js', 'gulp_tasks/inject.js', 'gulp_tasks/browserSync.js', 'gulp_tasks/karma.js', 'gulp_tasks/protractor.js']);
+const hub = new HubRegistry([
+  'gulp_tasks/misc.js',
+  'gulp_tasks/build.js',
+  'gulp_tasks/styles.js',
+  'gulp_tasks/scripts.js',
+  'gulp_tasks/inject.js',
+  'gulp_tasks/browserSync.js',
+  'gulp_tasks/karma.js',
+  'gulp_tasks/protractor.js'
+]);
 
 // Tell gulp to use the tasks just loaded
 gulp.registry(hub);
@@ -24,8 +33,10 @@ function watch(done) {
   gulp.watch([pathsJoin(conf.paths.src, '/*.html'), 'bower.json'], gulp.parallel('inject'));
 
   gulp.watch([
-    pathsJoin(conf.paths.src, '/app/**/*.css'),
-    pathsJoin(conf.paths.src, '/app/**/*.scss')
+<% if (cssPreprocessor !== 'css') { -%>
+    pathsJoin(conf.paths.src, '/app/**/*.<%- cssPreprocessor %>'),
+<% } -%>
+    pathsJoin(conf.paths.src, '/app/**/*.css')
   ], gulp.series('styles'));
 
   gulp.watch(pathsJoin(conf.paths.src, '/app/**/*.js'), gulp.series('scripts', 'inject'));
