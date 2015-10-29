@@ -47,6 +47,10 @@ module.exports = generators.Base.extend({
             value: 'scss'
           },
           {
+            name: 'LESS',
+            value: 'less'
+          },
+          {
             name: 'CSS',
             value: 'css'
           }
