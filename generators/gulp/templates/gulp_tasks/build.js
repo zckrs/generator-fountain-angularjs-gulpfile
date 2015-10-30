@@ -55,6 +55,9 @@ function build() {
 <% if (cssPreprocessor === 'scss') { -%>
     .pipe($.replace('../../bower_components/bootstrap-sass/assets/fonts/bootstrap/', '../fonts/'))
 <% } -%>
+<% if (cssPreprocessor === 'less') { -%>
+    .pipe($.replace('../../bower_components/bootstrap/fonts/', '../fonts/'))
+<% } -%>
     .pipe($.minifyCss({ processImport: false }))
     .pipe($.sourcemaps.write('maps'))
     .pipe(cssFilter.restore)

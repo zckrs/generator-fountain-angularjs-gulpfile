@@ -26,6 +26,7 @@ module.exports = generators.Base.extend({
   writing: {
     package: function () {
       var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
+
       var newPkg = {
         devDependencies: {
           'babel-core': '^5.8.29',
@@ -71,6 +72,10 @@ module.exports = generators.Base.extend({
 
       if (this.options.cssPreprocessor === 'scss') {
         newPkg.devDependencies['gulp-sass'] = '^2.0.4';
+      }
+
+      if (this.options.cssPreprocessor === 'less') {
+        newPkg.devDependencies['gulp-less'] = '^3.0.3';
       }
 
       extend(pkg, newPkg);

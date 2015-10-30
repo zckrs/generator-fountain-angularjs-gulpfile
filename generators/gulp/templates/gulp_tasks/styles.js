@@ -19,6 +19,14 @@ function styles() {
     style: 'expanded'
   };
 <% } -%>
+<% if (cssPreprocessor === 'less') { -%>
+  var lessOptions = {
+    options: [
+      'bower_components',
+      pathsJoin(conf.paths.src, '/app')
+    ]
+  };
+<% } -%>
 
   let injectFiles = gulp.src([
     pathsJoin(conf.paths.src, '/app/**/*.<%- cssPreprocessor %>'),
@@ -43,6 +51,9 @@ function styles() {
     .pipe($.sourcemaps.init())
 <%   if (cssPreprocessor == 'scss') { -%>
     .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))
+<% } -%>
+<%   if (cssPreprocessor == 'less') { -%>
+    .pipe($.less(lessOptions)).on('error', conf.errorHandler('Less'))
 <% } -%>
     .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
     .pipe($.sourcemaps.write())
