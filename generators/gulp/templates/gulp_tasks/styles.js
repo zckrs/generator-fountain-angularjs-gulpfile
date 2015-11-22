@@ -1,4 +1,4 @@
-import 'babel-core/polyfill';
+//import 'babel-core/polyfill';
 import { join as pathsJoin } from 'path';
 
 import gulp from 'gulp';

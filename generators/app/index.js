@@ -7,6 +7,16 @@ module.exports = generators.Base.extend({
   constructor: function () {
     generators.Base.apply(this, arguments);
 
+    this.option('framework', {
+      type: String,
+      required: true
+    });
+
+    this.option('dependencyManagement', {
+      type: String,
+      required: true
+    });
+
     this.option('cssPreprocessor', {
       type: String,
       required: true
@@ -26,6 +36,8 @@ module.exports = generators.Base.extend({
   initializing: function () {
     // Pre set the default props from the information we have at this point
     this.props = {
+      framework: this.options.framework,
+      dependencyManagement: this.options.dependencyManagement,
       cssPreprocessor: this.options.cssPreprocessor,
       jsPreprocessor: this.options.jsPreprocessor,
       htmlPreprocessor: this.options.htmlPreprocessor
@@ -37,6 +49,28 @@ module.exports = generators.Base.extend({
       var done = this.async();
 
       var prompts = [{
+        when: !this.props.framework,
+        type: 'list',
+        name: 'framework',
+        message: 'Which JavaScript framework do you want?',
+        choices: [
+          {
+            name: 'React',
+            value: 'react'
+          }
+        ]
+      }, {
+        when: !this.props.dependencyManagement,
+        type: 'list',
+        name: 'dependencyManagement',
+        message: 'Which dependency management do you want?',
+        choices: [
+          {
+            name: 'NPM & CommonJS',
+            value: 'commonjs'
+          }
+        ]
+      }, {
         when: !this.props.cssPreprocessor,
         type: 'list',
         name: 'cssPreprocessor',
@@ -58,8 +92,8 @@ module.exports = generators.Base.extend({
         message: 'Which JS preprocessor do you want?',
         choices: [
           {
-            name: 'HTML',
-            value: 'html'
+            name: 'JS',
+            value: 'js'
           }
         ]
       }, {
@@ -69,8 +103,8 @@ module.exports = generators.Base.extend({
         message: 'Which HTML template engine would you want?',
         choices: [
           {
-            name: 'JS',
-            value: 'js'
+            name: 'HTML',
+            value: 'html'
           }
         ]
       }];
@@ -88,14 +122,15 @@ module.exports = generators.Base.extend({
   },
 
   default: function () {
-    this.composeWith('fountain-gulpfile:gulp', {
+    this.composeWith('fountain-gulpfile:' + this.props.framework, {
       options: {
+        dependencyManagement: this.props.dependencyManagement,
         cssPreprocessor: this.props.cssPreprocessor,
         jsPreprocessor: this.props.jsPreprocessor,
         htmlPreprocessor: this.props.authorName
       }
     }, {
-      local: require.resolve('../gulp')
+      local: require.resolve('../' + this.props.framework)
     });
   },
 

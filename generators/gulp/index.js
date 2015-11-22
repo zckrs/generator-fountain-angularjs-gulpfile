@@ -7,6 +7,11 @@ module.exports = generators.Base.extend({
   constructor: function () {
     generators.Base.apply(this, arguments);
 
+    this.option('dependencyManagement', {
+      type: String,
+      required: true
+    });
+
     this.option('cssPreprocessor', {
       type: String,
       required: true
@@ -23,12 +28,23 @@ module.exports = generators.Base.extend({
     });
   },
 
+  initializing: function () {
+    // Pre set the default props from the information we have at this point
+    this.props = {
+      dependencyManagement: this.options.dependencyManagement,
+      cssPreprocessor: this.options.cssPreprocessor,
+      jsPreprocessor: this.options.jsPreprocessor,
+      htmlPreprocessor: this.options.htmlPreprocessor
+    };
+  },
+
   writing: {
     package: function () {
       var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
       var newPkg = {
         devDependencies: {
-          'babel-core': '^5.8.29',
+          'babel-core': '^6.2.0',
+          'babel-preset-es2015': '^6.1.18',
           'browser-sync': '^2.9.11',
           del: '^2.0.2',
           gulp: 'gulpjs/gulp#4.0',
@@ -94,6 +110,24 @@ module.exports = generators.Base.extend({
           cssPreprocessor: this.options.cssPreprocessor
         }
       );
+
+      this.fs.copyTpl(
+        this.templatePath('.babelrc'),
+        this.destinationPath('.babelrc')
+      );
+
+      this.fs.copyTpl(
+        this.templatePath('.eslintrc'),
+        this.destinationPath('.eslintrc')
+      );
     }
+  },
+
+  compose: function () {
+    this.composeWith('fountain-gulpfile:commonjs', {
+      options: {}
+    }, {
+      local: require.resolve('../commonjs')
+    });
   }
 });
