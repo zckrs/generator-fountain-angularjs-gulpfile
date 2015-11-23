@@ -1,6 +1,6 @@
 'use strict';
 
-var extend = require('deep-extend');
+var mergeJson = require('../../src/merge-json');
 var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
@@ -40,17 +40,15 @@ module.exports = generators.Base.extend({
 
   writing: {
     package: function () {
-      var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-      var newPkg = {
+      mergeJson.call(this, 'package.json', {
         dependencies: {
           react: '0.14.3',
           'react-dom': '0.14.3'
+        },
+        devDependencies: {
+          'eslint-plugin-react': '3.10.0'
         }
-      };
-
-      extend(pkg, newPkg);
-
-      this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+      });
     },
 
     src: function () {
@@ -58,6 +56,16 @@ module.exports = generators.Base.extend({
         this.templatePath('src'),
         this.destinationPath('src')
       );
+
+      mergeJson.call(this, '.babelrc', {
+        presets: ['react']
+      });
+
+      mergeJson.call(this, '.eslintrc', {
+        plugins: ['react'],
+        ecmaFeatures: { jsx: true },
+        rules: { 'react/jsx-uses-react': 1 }
+      });
     }
   },
 

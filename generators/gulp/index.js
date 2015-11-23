@@ -1,6 +1,6 @@
 'use strict';
 
-var extend = require('deep-extend');
+var mergeJson = require('../../src/merge-json');
 var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
@@ -40,7 +40,6 @@ module.exports = generators.Base.extend({
 
   writing: {
     package: function () {
-      var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
       var newPkg = {
         devDependencies: {
           'babel-core': '^6.2.0',
@@ -86,9 +85,7 @@ module.exports = generators.Base.extend({
         newPkg.devDependencies['gulp-sass'] = '^2.0.4';
       }
 
-      extend(pkg, newPkg);
-
-      this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+      mergeJson.call(this, 'package.json', newPkg);
     },
 
     gulpfile: function () {
@@ -108,15 +105,16 @@ module.exports = generators.Base.extend({
         }
       );
 
-      this.fs.copyTpl(
-        this.templatePath('.babelrc'),
-        this.destinationPath('.babelrc')
-      );
+      mergeJson.call(this, '.babelrc', {
+        presets: ['es2015']
+      });
 
-      this.fs.copyTpl(
-        this.templatePath('.eslintrc'),
-        this.destinationPath('.eslintrc')
-      );
+      mergeJson.call(this, '.eslintrc', {
+        extends: 'eslint:recommended',
+        env: { es6: true, browser: true, jasmine: true },
+        ecmaFeatures: { modules: true },
+        globals: { module: true, inject: true }
+      });
     }
   },
 

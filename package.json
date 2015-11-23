@@ -24,7 +24,7 @@
     "cli"
   ],
   "dependencies": {
-    "deep-extend": "^0.4.0",
+    "lodash": "^3.10.1",
     "yeoman-generator": "^0.20.3"
   },
   "devDependencies": {
