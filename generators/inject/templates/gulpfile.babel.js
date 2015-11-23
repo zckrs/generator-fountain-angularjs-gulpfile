@@ -21,13 +21,16 @@ const hub = new HubRegistry([
 // Tell gulp to use the tasks just loaded
 gulp.registry(hub);
 
+gulp.task('inject', gulp.series(gulp.parallel('styles', 'scripts'), 'inject'));
 gulp.task('build', gulp.series(gulp.parallel('fonts', 'other'), 'build'));
 
-gulp.task('serve', gulp.series(gulp.parallel('scripts', 'styles'), watch, 'browser-sync'));
+gulp.task('serve', gulp.series(watch, 'browser-sync'));
 gulp.task('serve:dist', gulp.series('default', 'browser-sync:dist'));
 gulp.task('default', gulp.series('clean', 'build'));
 
 function watch(done) {
+  gulp.watch([pathsJoin(conf.paths.src, '/*.html'), 'bower.json'], gulp.parallel('inject'));
+
   gulp.watch([
 <% if (cssPreprocessor !== 'css') { -%>
     pathsJoin(conf.paths.src, '/app/**/*.<%- cssPreprocessor %>'),
@@ -35,7 +38,7 @@ function watch(done) {
     pathsJoin(conf.paths.src, '/app/**/*.css')
   ], gulp.series('styles'));
 
-  gulp.watch(pathsJoin(conf.paths.src, '/app/**/*.js'), gulp.series('scripts'));
+  gulp.watch(pathsJoin(conf.paths.src, '/app/**/*.js'), gulp.series('scripts', 'inject'));
 
   done();
 }

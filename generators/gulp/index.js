@@ -55,7 +55,6 @@ module.exports = generators.Base.extend({
           'gulp-filter': '^3.0.1',
           'gulp-flatten': '^0.2.0',
           'gulp-hub': 'frankwallis/gulp-hub#registry-init',
-          'gulp-inject': '^3.0.0',
           'gulp-load-plugins': '^1.0.0',
           'gulp-minify-css': '^1.2.1',
           'gulp-minify-html': '^1.0.4',
@@ -74,9 +73,7 @@ module.exports = generators.Base.extend({
           'karma-jasmine': '^0.3.6',
           'karma-ng-html2js-preprocessor': '^0.2.0',
           'karma-phantomjs-launcher': '^0.2.1',
-          'main-bower-files': '^2.9.0',
-          'uglify-save-license': '^0.4.1',
-          wiredep: '^2.2.2'
+          'uglify-save-license': '^0.4.1'
         },
         scripts: {
           build: 'gulp',
