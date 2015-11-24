@@ -1,6 +1,6 @@
 'use strict';
 
-var extend = require('deep-extend');
+var _ = require('lodash');
 var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
@@ -57,6 +57,10 @@ module.exports = generators.Base.extend({
           {
             name: 'React',
             value: 'react'
+          },
+          {
+            name: 'Angular 2',
+            value: 'angular2'
           }
         ]
       }, {
@@ -110,7 +114,7 @@ module.exports = generators.Base.extend({
       }];
 
       this.prompt(prompts, function (props) {
-        this.props = extend(this.props, props);
+        this.props = _.merge(this.props, props);
 
         done();
       }.bind(this));

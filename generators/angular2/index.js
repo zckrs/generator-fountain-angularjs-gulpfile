@@ -42,12 +42,7 @@ module.exports = generators.Base.extend({
     package: function () {
       handleJson.mergeJson.call(this, 'package.json', {
         dependencies: {
-          react: '0.14.3',
-          'react-dom': '0.14.3'
-        },
-        devDependencies: {
-          'babel-preset-react': '6.1.18',
-          'eslint-plugin-react': '3.10.0'
+          angular2: '^2.0.0-alpha.46'
         }
       });
     },
@@ -57,23 +52,13 @@ module.exports = generators.Base.extend({
         this.templatePath('src'),
         this.destinationPath('src')
       );
-
-      handleJson.mergeJson.call(this, '.babelrc', {
-        presets: ['react']
-      });
-
-      handleJson.mergeJson.call(this, '.eslintrc', {
-        plugins: ['react'],
-        ecmaFeatures: { jsx: true },
-        rules: { 'react/jsx-uses-react': 1 }
-      });
     }
   },
 
   compose: function () {
     this.composeWith('fountain-gulpfile:gulp', {
       options: {
-        dependencyManagement: this.options.dependencyManagement,
+        dependencyManagement: this.props.dependencyManagement,
         cssPreprocessor: this.props.cssPreprocessor,
         jsPreprocessor: this.props.jsPreprocessor,
         htmlPreprocessor: this.props.authorName

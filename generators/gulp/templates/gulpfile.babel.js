@@ -21,7 +21,7 @@ const hub = new HubRegistry([
 // Tell gulp to use the tasks just loaded
 gulp.registry(hub);
 
-gulp.task('build', gulp.series(gulp.parallel('fonts', 'other'), 'build'));
+gulp.task('build', gulp.series('other', 'build'));
 
 gulp.task('serve', gulp.series(gulp.parallel('scripts', 'styles'), watch, 'browser-sync'));
 gulp.task('serve:dist', gulp.series('default', 'browser-sync:dist'));

@@ -1,6 +1,6 @@
 'use strict';
 
-var mergeJson = require('../../src/merge-json');
+var handleJson = require('../../src/handle-json');
 var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
@@ -10,7 +10,7 @@ module.exports = generators.Base.extend({
 
   writing: {
     package: function () {
-      mergeJson.call(this, 'package.json', {
+      handleJson.mergeJson.call(this, 'package.json', {
         devDependencies: {
           'webpack-stream': '^2.1.1',
           'eslint-loader': '^1.1.1',

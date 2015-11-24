@@ -13,7 +13,7 @@ function browserSyncServe(done) {
     server: {
       baseDir: [conf.paths.tmp, conf.paths.src],
       routes: {
-        '/bower_components': 'bower_components'
+        '/node_modules': 'node_modules'
       }
     }
   });

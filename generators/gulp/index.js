@@ -1,6 +1,6 @@
 'use strict';
 
-var mergeJson = require('../../src/merge-json');
+var handleJson = require('../../src/handle-json');
 var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
@@ -85,7 +85,7 @@ module.exports = generators.Base.extend({
         newPkg.devDependencies['gulp-sass'] = '^2.0.4';
       }
 
-      mergeJson.call(this, 'package.json', newPkg);
+      handleJson.mergeJson.call(this, 'package.json', newPkg);
     },
 
     gulpfile: function () {
@@ -105,11 +105,11 @@ module.exports = generators.Base.extend({
         }
       );
 
-      mergeJson.call(this, '.babelrc', {
+      handleJson.mergeJson.call(this, '.babelrc', {
         presets: ['es2015']
       });
 
-      mergeJson.call(this, '.eslintrc', {
+      handleJson.mergeJson.call(this, '.eslintrc', {
         extends: 'eslint:recommended',
         env: { es6: true, browser: true, jasmine: true },
         ecmaFeatures: { modules: true },

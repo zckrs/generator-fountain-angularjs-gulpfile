@@ -1,6 +1,6 @@
 'use strict';
 
-var extend = require('deep-extend');
+var handleJson = require('../../src/handle-json');
 var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
@@ -10,18 +10,13 @@ module.exports = generators.Base.extend({
 
   writing: {
     package: function () {
-      var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
-      var newPkg = {
+      handleJson.mergeJson.call(this, 'package.json', {
         devDependencies: {
           'gulp-inject': '^3.0.0',
           'main-bower-files': '^2.9.0',
           wiredep: '^2.2.2'
         }
-      };
-
-      extend(pkg, newPkg);
-
-      this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+      });
     },
 
     src: function () {
