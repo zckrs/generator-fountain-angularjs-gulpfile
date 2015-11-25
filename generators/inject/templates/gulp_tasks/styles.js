@@ -1,3 +1,4 @@
+//import 'babel-core/polyfill';
 import { join as pathsJoin } from 'path';
 
 import gulp from 'gulp';
@@ -18,9 +19,26 @@ function styles() {
   };
 <% } -%>
 
+  let injectFiles = gulp.src([
+    pathsJoin(conf.paths.src, '/app/**/*.<%- cssPreprocessor %>'),
+    pathsJoin('!' + conf.paths.src, '/app/index.<%- cssPreprocessor %>')
+  ], { read: false });
+
+  let injectOptions = {
+    transform: function (filePath) {
+      filePath = filePath.replace(conf.paths.src + '/app/', '');
+      return '@import "' + filePath + '";';
+    },
+    starttag: '// injector',
+    endtag: '// endinjector',
+    addRootSlash: false
+  };
+
   return gulp.src([
     pathsJoin(conf.paths.src, '/app/index.<%- cssPreprocessor %>')
   ])
+    .pipe($.inject(injectFiles, injectOptions))
+    .pipe(wiredep(Object.assign({}, conf.wiredep)))
     .pipe($.sourcemaps.init())
 <%   if (cssPreprocessor == 'scss') { -%>
     .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))

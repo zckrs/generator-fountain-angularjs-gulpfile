@@ -1,34 +1,36 @@
 'use strict';
 
-var extend = require('deep-extend');
+var handleJson = require('../../src/file-utils');
 var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
   constructor: function () {
     generators.Base.apply(this, arguments);
 
-    this.option('cssPreprocessor', {
-      type: String,
-      required: true
-    });
+    this.option('framework', { type: String, required: false });
+    this.option('dependencyManagement', { type: String, required: true });
+    this.option('cssPreprocessor', { type: String, required: true });
+    this.option('jsPreprocessor', { type: String, required: true });
+    this.option('htmlPreprocessor', { type: String, required: true });
+  },
 
-    this.option('jsPreprocessor', {
-      type: String,
-      required: true
-    });
-
-    this.option('htmlPreprocessor', {
-      type: String,
-      required: true
-    });
+  initializing: function () {
+    // Pre set the default props from the information we have at this point
+    this.props = {
+      framework: this.options.framework,
+      dependencyManagement: this.options.dependencyManagement,
+      cssPreprocessor: this.options.cssPreprocessor,
+      jsPreprocessor: this.options.jsPreprocessor,
+      htmlPreprocessor: this.options.htmlPreprocessor
+    };
   },
 
   writing: {
     package: function () {
-      var pkg = this.fs.readJSON(this.destinationPath('package.json'), {});
       var newPkg = {
         devDependencies: {
-          'babel-core': '^5.8.29',
+          'babel-core': '^6.2.0',
+          'babel-preset-es2015': '^6.1.18',
           'browser-sync': '^2.9.11',
           del: '^2.0.2',
           gulp: 'gulpjs/gulp#4.0',
@@ -39,7 +41,6 @@ module.exports = generators.Base.extend({
           'gulp-filter': '^3.0.1',
           'gulp-flatten': '^0.2.0',
           'gulp-hub': 'frankwallis/gulp-hub#registry-init',
-          'gulp-inject': '^3.0.0',
           'gulp-load-plugins': '^1.0.0',
           'gulp-minify-css': '^1.2.1',
           'gulp-minify-html': '^1.0.4',
@@ -58,9 +59,7 @@ module.exports = generators.Base.extend({
           'karma-jasmine': '^0.3.6',
           'karma-ng-html2js-preprocessor': '^0.2.0',
           'karma-phantomjs-launcher': '^0.2.1',
-          'main-bower-files': '^2.9.0',
-          'uglify-save-license': '^0.4.1',
-          wiredep: '^2.2.2'
+          'uglify-save-license': '^0.4.1'
         },
         scripts: {
           build: 'gulp',
@@ -73,9 +72,7 @@ module.exports = generators.Base.extend({
         newPkg.devDependencies['gulp-sass'] = '^2.0.4';
       }
 
-      extend(pkg, newPkg);
-
-      this.fs.writeJSON(this.destinationPath('package.json'), pkg);
+      handleJson.mergeJson.call(this, 'package.json', newPkg);
     },
 
     gulpfile: function () {
@@ -91,9 +88,31 @@ module.exports = generators.Base.extend({
         this.templatePath('gulp_tasks'),
         this.destinationPath('gulp_tasks'),
         {
+          dependencyManagement: this.options.dependencyManagement,
           cssPreprocessor: this.options.cssPreprocessor
         }
       );
+
+      handleJson.mergeJson.call(this, '.babelrc', {
+        presets: ['es2015']
+      });
+
+      handleJson.mergeJson.call(this, '.eslintrc', {
+        extends: 'eslint:recommended',
+        env: { es6: true, browser: true, jasmine: true },
+        ecmaFeatures: { modules: true },
+        globals: { module: true, inject: true }
+      });
     }
+  },
+
+  compose: function () {
+    this.composeWith('fountain-gulpfile:' + this.props.dependencyManagement, {
+      options: {
+        framework: this.props.framework
+      }
+    }, {
+      local: require.resolve('../' + this.props.dependencyManagement)
+    });
   }
 });
