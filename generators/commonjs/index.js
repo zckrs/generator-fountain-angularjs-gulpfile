@@ -10,6 +10,13 @@ module.exports = generators.Base.extend({
     this.option('framework', { type: String, required: false });
   },
 
+  initializing: function () {
+    // Pre set the default props from the information we have at this point
+    this.props = {
+      framework: this.options.framework
+    };
+  },
+
   writing: {
     package: function () {
       handleJson.mergeJson.call(this, 'package.json', {

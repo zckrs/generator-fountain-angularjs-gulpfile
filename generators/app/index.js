@@ -40,6 +40,10 @@ module.exports = generators.Base.extend({
             value: 'react'
           },
           {
+            name: 'Angular 1',
+            value: 'angular1'
+          },
+          {
             name: 'Angular 2',
             value: 'angular2'
           }
