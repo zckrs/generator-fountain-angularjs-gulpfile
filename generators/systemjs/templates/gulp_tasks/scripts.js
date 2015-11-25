@@ -13,7 +13,6 @@ function scripts() {
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(babel({
-      presets: ['es2015'],
       plugins: ['transform-es2015-modules-systemjs']
     }))
     .pipe(gulp.dest(pathsJoin(conf.paths.tmp)));
