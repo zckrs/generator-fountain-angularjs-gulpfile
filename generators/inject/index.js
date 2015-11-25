@@ -1,6 +1,6 @@
 'use strict';
 
-var handleJson = require('../../src/handle-json');
+var handleJson = require('../../src/file-utils');
 var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({

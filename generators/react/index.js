@@ -1,31 +1,16 @@
 'use strict';
 
-var handleJson = require('../../src/handle-json');
+var handleJson = require('../../src/file-utils');
 var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
   constructor: function () {
     generators.Base.apply(this, arguments);
 
-    this.option('dependencyManagement', {
-      type: String,
-      required: true
-    });
-
-    this.option('cssPreprocessor', {
-      type: String,
-      required: true
-    });
-
-    this.option('jsPreprocessor', {
-      type: String,
-      required: true
-    });
-
-    this.option('htmlPreprocessor', {
-      type: String,
-      required: true
-    });
+    this.option('dependencyManagement', { type: String, required: true });
+    this.option('cssPreprocessor', { type: String, required: true });
+    this.option('jsPreprocessor', { type: String, required: true });
+    this.option('htmlPreprocessor', { type: String, required: true });
   },
 
   initializing: function () {
@@ -73,6 +58,7 @@ module.exports = generators.Base.extend({
   compose: function () {
     this.composeWith('fountain-gulpfile:gulp', {
       options: {
+        framework: 'react',
         dependencyManagement: this.options.dependencyManagement,
         cssPreprocessor: this.props.cssPreprocessor,
         jsPreprocessor: this.props.jsPreprocessor,

@@ -1,11 +1,13 @@
 'use strict';
 
-var handleJson = require('../../src/handle-json');
+var handleJson = require('../../src/file-utils');
 var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
   constructor: function () {
     generators.Base.apply(this, arguments);
+
+    this.option('framework', { type: String, required: false });
   },
 
   writing: {
@@ -20,11 +22,17 @@ module.exports = generators.Base.extend({
       });
     },
 
-    src: function () {
+    gulp: function () {
       this.fs.copyTpl(
         this.templatePath('gulp_tasks'),
         this.destinationPath('gulp_tasks')
       );
+    },
+
+    indexHtml: function () {
+      handleJson.replaceInFile.call(this, 'src/index.html', /<\/html>/, {
+        framework: this.props.framework
+      });
     }
   }
 });

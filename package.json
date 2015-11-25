@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "babel-core": "^5.8.25",
+    "ejs": "^2.3.4",
     "gulp": "gulpjs/gulp#4.0",
     "gulp-eslint": "^1.0.0",
     "gulp-exclude-gitignore": "^1.0.0",

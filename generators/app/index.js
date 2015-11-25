@@ -7,30 +7,11 @@ module.exports = generators.Base.extend({
   constructor: function () {
     generators.Base.apply(this, arguments);
 
-    this.option('framework', {
-      type: String,
-      required: true
-    });
-
-    this.option('dependencyManagement', {
-      type: String,
-      required: true
-    });
-
-    this.option('cssPreprocessor', {
-      type: String,
-      required: true
-    });
-
-    this.option('jsPreprocessor', {
-      type: String,
-      required: true
-    });
-
-    this.option('htmlPreprocessor', {
-      type: String,
-      required: true
-    });
+    this.option('framework', { type: String, required: true });
+    this.option('dependencyManagement', { type: String, required: true });
+    this.option('cssPreprocessor', { type: String, required: true });
+    this.option('jsPreprocessor', { type: String, required: true });
+    this.option('htmlPreprocessor', { type: String, required: true });
   },
 
   initializing: function () {
@@ -70,8 +51,12 @@ module.exports = generators.Base.extend({
         message: 'Which dependency management do you want?',
         choices: [
           {
-            name: 'NPM & CommonJS',
+            name: 'CommonJS & NPM',
             value: 'commonjs'
+          },
+          {
+            name: 'SystemJS & JSPM',
+            value: 'systemjs'
           }
         ]
       }, {

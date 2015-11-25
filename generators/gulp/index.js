@@ -1,36 +1,23 @@
 'use strict';
 
-var handleJson = require('../../src/handle-json');
+var handleJson = require('../../src/file-utils');
 var generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
   constructor: function () {
     generators.Base.apply(this, arguments);
 
-    this.option('dependencyManagement', {
-      type: String,
-      required: true
-    });
-
-    this.option('cssPreprocessor', {
-      type: String,
-      required: true
-    });
-
-    this.option('jsPreprocessor', {
-      type: String,
-      required: true
-    });
-
-    this.option('htmlPreprocessor', {
-      type: String,
-      required: true
-    });
+    this.option('framework', { type: String, required: false });
+    this.option('dependencyManagement', { type: String, required: true });
+    this.option('cssPreprocessor', { type: String, required: true });
+    this.option('jsPreprocessor', { type: String, required: true });
+    this.option('htmlPreprocessor', { type: String, required: true });
   },
 
   initializing: function () {
     // Pre set the default props from the information we have at this point
     this.props = {
+      framework: this.options.framework,
       dependencyManagement: this.options.dependencyManagement,
       cssPreprocessor: this.options.cssPreprocessor,
       jsPreprocessor: this.options.jsPreprocessor,
@@ -101,6 +88,7 @@ module.exports = generators.Base.extend({
         this.templatePath('gulp_tasks'),
         this.destinationPath('gulp_tasks'),
         {
+          dependencyManagement: this.options.dependencyManagement,
           cssPreprocessor: this.options.cssPreprocessor
         }
       );
@@ -119,10 +107,12 @@ module.exports = generators.Base.extend({
   },
 
   compose: function () {
-    this.composeWith('fountain-gulpfile:commonjs', {
-      options: {}
+    this.composeWith('fountain-gulpfile:' + this.props.dependencyManagement, {
+      options: {
+        framework: this.props.framework
+      }
     }, {
-      local: require.resolve('../commonjs')
+      local: require.resolve('../' + this.props.dependencyManagement)
     });
   }
 });
