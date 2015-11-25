@@ -58,6 +58,10 @@ module.exports = generators.Base.extend({
       handleJson.replaceInFile.call(this, 'src/index.html', /<\/html>/, {
         framework: this.props.framework
       });
+    },
+
+    installing: function () {
+      this.runInstall('jspm');
     }
   }
 });
