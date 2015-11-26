@@ -109,7 +109,8 @@ module.exports = generators.Base.extend({
   compose: function () {
     this.composeWith('fountain-gulpfile:' + this.props.dependencyManagement, {
       options: {
-        framework: this.props.framework
+        framework: this.props.framework,
+        cssPreprocessor: this.props.cssPreprocessor
       }
     }, {
       local: require.resolve('../' + this.props.dependencyManagement)

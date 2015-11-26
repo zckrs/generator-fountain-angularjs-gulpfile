@@ -1,4 +1,3 @@
-//import 'babel-core/polyfill';
 import { join as pathsJoin } from 'path';
 
 import gulp from 'gulp';
@@ -20,10 +19,10 @@ function inject() {
 <% } -%>
 
   let injectScripts = gulp.src([
-    pathsJoin(conf.paths.src, '/app/**/*.module.js'),
-    pathsJoin(conf.paths.src, '/app/**/*.js'),
-    pathsJoin('!' + conf.paths.src, '/app/**/*.spec.js'),
-    pathsJoin('!' + conf.paths.src, '/app/**/*.mock.js')
+    pathsJoin(conf.paths.tmp, '/**/*.module.js'),
+    pathsJoin(conf.paths.tmp, '/**/*.js'),
+    pathsJoin('!' + conf.paths.tmp, '/**/*.spec.js'),
+    pathsJoin('!' + conf.paths.tmp, '/**/*.mock.js')
   ])
   .pipe($.angularFilesort()).on('error', conf.errorHandler('AngularFilesort'));
 

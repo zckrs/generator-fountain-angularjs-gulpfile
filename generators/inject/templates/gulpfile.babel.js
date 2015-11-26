@@ -13,6 +13,7 @@ const hub = new HubRegistry([
   'gulp_tasks/build.js',
   'gulp_tasks/styles.js',
   'gulp_tasks/scripts.js',
+  'gulp_tasks/inject.js',
   'gulp_tasks/browserSync.js',
   'gulp_tasks/karma.js',
   'gulp_tasks/protractor.js'
@@ -22,9 +23,9 @@ const hub = new HubRegistry([
 gulp.registry(hub);
 
 gulp.task('inject', gulp.series(gulp.parallel('styles', 'scripts'), 'inject'));
-gulp.task('build', gulp.series(gulp.parallel('fonts', 'other'), 'build'));
+gulp.task('build', gulp.series('inject', gulp.parallel('fonts', 'other'), 'build'));
 
-gulp.task('serve', gulp.series(watch, 'browser-sync'));
+gulp.task('serve', gulp.series('inject', watch, 'browser-sync'));
 gulp.task('serve:dist', gulp.series('default', 'browser-sync:dist'));
 gulp.task('default', gulp.series('clean', 'build'));
 

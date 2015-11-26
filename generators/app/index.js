@@ -53,16 +53,25 @@ module.exports = generators.Base.extend({
         type: 'list',
         name: 'dependencyManagement',
         message: 'Which dependency management do you want?',
-        choices: [
-          {
-            name: 'CommonJS & NPM',
-            value: 'commonjs'
-          },
-          {
-            name: 'SystemJS & JSPM',
-            value: 'systemjs'
+        choices: function (responses) {
+          var choices = [
+            {
+              name: 'CommonJS & NPM',
+              value: 'commonjs'
+            },
+            {
+              name: 'SystemJS & JSPM',
+              value: 'systemjs'
+            }
+          ];
+          if (responses.framework !== 'angular2') {
+            choices.push({
+              name: 'Script injection & Bower',
+              value: 'inject'
+            });
           }
-        ]
+          return choices;
+        }
       }, {
         when: !this.props.cssPreprocessor,
         type: 'list',

@@ -1,9 +1,9 @@
-//import 'babel-core/polyfill';
 import { join as pathsJoin } from 'path';
 
 import gulp from 'gulp';
 import browserSync from 'browser-sync';
 import gulpLoadPlugins from 'gulp-load-plugins';
+import { stream as wiredep } from 'wiredep';
 
 import * as conf from './gulpconf';
 

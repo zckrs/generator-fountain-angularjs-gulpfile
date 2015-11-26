@@ -1,5 +1,7 @@
+<% if (modules) { -%>
 import angular from 'angular';
 
+<% } -%>
 angular
   .module('app', [])
   .directive('helloApp', () => {

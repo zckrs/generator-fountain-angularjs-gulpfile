@@ -35,8 +35,17 @@ module.exports = generators.Base.extend({
     src: function () {
       this.fs.copyTpl(
         this.templatePath('src'),
-        this.destinationPath('src')
+        this.destinationPath('src'),
+        {
+          modules: this.props.dependencyManagement !== 'inject'
+        }
       );
+
+      if (this.props.dependencyManagement === 'inject') {
+        handleJson.mergeJson.call(this, '.eslintrc', {
+          globals: { angular: true }
+        });
+      }
     }
   },
 

@@ -40,18 +40,27 @@ module.exports = generators.Base.extend({
     src: function () {
       this.fs.copyTpl(
         this.templatePath('src'),
-        this.destinationPath('src')
+        this.destinationPath('src'),
+        {
+          modules: this.props.dependencyManagement !== 'inject'
+        }
       );
 
       handleJson.mergeJson.call(this, '.babelrc', {
         presets: ['react']
       });
 
-      handleJson.mergeJson.call(this, '.eslintrc', {
+      var eslint = {
         plugins: ['react'],
         ecmaFeatures: { jsx: true },
         rules: { 'react/jsx-uses-react': 1 }
-      });
+      };
+
+      if (this.props.dependencyManagement === 'inject') {
+        eslint.globals = { React: true, ReactDOM: true };
+      }
+
+      handleJson.mergeJson.call(this, '.eslintrc', eslint);
     }
   },
 
