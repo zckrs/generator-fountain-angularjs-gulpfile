@@ -5,7 +5,7 @@ import gulp from 'gulp';
 import gulpLoadPlugins from 'gulp-load-plugins';
 import uglifySaveLicense from 'uglify-save-license';
 
-import * as conf from './gulpconf';
+import * as conf from '../conf/gulp.conf';
 
 const $ = gulpLoadPlugins();
 

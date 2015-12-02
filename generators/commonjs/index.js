@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('lodash');
 var handleJson = require('../../src/file-utils');
 var generators = require('yeoman-generator');
 
@@ -19,20 +20,39 @@ module.exports = generators.Base.extend({
 
   writing: {
     package: function () {
-      handleJson.mergeJson.call(this, 'package.json', {
+      var newPkg = {
         devDependencies: {
-          'webpack-stream': '^2.1.1',
+          webpack: '^1.12.9',
           'eslint-loader': '^1.1.1',
           'babel-loader': '^6.2.0',
           'babel-preset-react': '^6.1.18'
         }
-      });
+      };
+
+      if (this.props.framework === 'react') {
+        _.merge(newPkg, {
+          devDependencies: {
+            'webpack-dev-middleware': '^1.4.0',
+            'webpack-hot-middleware': '^2.6.0',
+            'react-hot-loader': '^1.3.0'
+          }
+        });
+      }
+
+      handleJson.mergeJson.call(this, 'package.json', newPkg);
     },
 
-    gulp: function () {
+    files: function () {
+      this.fs.copyTpl(
+        this.templatePath('conf'),
+        this.destinationPath('conf'),
+        { framework: this.props.framework }
+      );
+
       this.fs.copyTpl(
         this.templatePath('gulp_tasks'),
-        this.destinationPath('gulp_tasks')
+        this.destinationPath('gulp_tasks'),
+        { framework: this.props.framework }
       );
     },
 

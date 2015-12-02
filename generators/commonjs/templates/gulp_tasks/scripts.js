@@ -1,55 +1,54 @@
 import { join as pathsJoin } from 'path';
 
 import gulp from 'gulp';
-import gulpLoadPlugins from 'gulp-load-plugins';
+import gutil from 'gulp-util';
 
-import * as conf from './gulpconf';
+import * as conf from '../conf/gulp.conf';
+
+import webpack from 'webpack';
+import webpackConf from '../conf/webpack.conf';
+<% if (framework !== 'react') { -%>
 
 import browserSync from 'browser-sync';
-import webpack from 'webpack-stream';
+<% } -%>
 
-var $ = require('gulp-load-plugins')();
-
-function webpackWrapper(watch, test, callback) {
-  var webpackOptions = {
-    watch: watch,
-    module: {
-      preLoaders: [{ test: /\.js$/, exclude: /node_modules/, loader: 'eslint-loader'}],
-      loaders: [{ test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader'}]
-    },
-    output: { filename: 'index.js' }
-  };
-
-  if(watch) {
-    webpackOptions.devtool = 'inline-source-map';
-  }
+function webpackWrapper(watch, test, done) {
+  var webpackBundler = webpack(webpackConf);
 
   var webpackChangeHandler = function(err, stats) {
     if(err) {
       conf.errorHandler('Webpack')(err);
     }
-    $.util.log(stats.toString({
-      colors: $.util.colors.supportsColor,
+    gutil.log(stats.toString({
+      colors: true,
       chunks: false,
       hash: false,
       version: false
     }));
-    browserSync.reload();
     if(watch) {
       watch = false;
-      callback();
+      done();
+<% if (framework == 'react') { -%>
     }
+<% } else { -%>
+    } else {
+      browserSync.reload();
+    }
+<% } -%>
   };
 
-  return gulp.src(pathsJoin(conf.paths.src, '/index.js'))
-    .pipe(webpack(webpackOptions, null, webpackChangeHandler))
-    .pipe(gulp.dest(conf.paths.tmp));
+  if (watch) {
+    webpackBundler.watch(200, webpackChangeHandler);
+  } else {
+    webpackBundler.run(webpackChangeHandler);
+  }
 }
 
-gulp.task('scripts', function () {
-  return webpackWrapper(false, false);
+gulp.task('scripts', function (done) {
+  webpackWrapper(false, false);
+  done();
 });
 
-gulp.task('scripts:watch', function (callback) {
-  return webpackWrapper(true, false, callback);
+gulp.task('scripts:watch', function (done) {
+  webpackWrapper(true, false, done);
 });

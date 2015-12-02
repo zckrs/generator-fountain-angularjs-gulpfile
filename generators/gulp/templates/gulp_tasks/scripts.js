@@ -3,7 +3,7 @@ import { join as pathsJoin } from 'path';
 import gulp from 'gulp';
 import eslint from 'gulp-eslint';
 
-import * as conf from './gulpconf';
+import * as conf from '../conf/gulp.conf';
 
 gulp.task('scripts', scripts);
 

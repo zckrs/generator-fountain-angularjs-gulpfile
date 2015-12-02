@@ -5,7 +5,7 @@ import { join as pathsJoin } from 'path';
 import gulp from 'gulp';
 import HubRegistry from 'gulp-hub';
 
-import * as conf from './gulp_tasks/gulpconf';
+import * as conf from './conf/gulp.conf';
 
 // Load some files into the registry
 const hub = new HubRegistry([

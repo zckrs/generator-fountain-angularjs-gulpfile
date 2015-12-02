@@ -4,7 +4,7 @@ import gulp from 'gulp';
 import browserSync from 'browser-sync';
 import gulpLoadPlugins from 'gulp-load-plugins';
 
-import * as conf from './gulpconf';
+import * as conf from '../conf/gulp.conf';
 
 const $ = gulpLoadPlugins();
 

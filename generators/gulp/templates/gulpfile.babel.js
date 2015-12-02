@@ -5,7 +5,7 @@ import { join as pathsJoin } from 'path';
 import gulp from 'gulp';
 import HubRegistry from 'gulp-hub';
 
-import * as conf from './gulp_tasks/gulpconf';
+import * as conf from './conf/gulp.conf';
 
 // Load some files into the registry
 const hub = new HubRegistry([
@@ -23,7 +23,7 @@ gulp.registry(hub);
 
 gulp.task('build', gulp.series('other', 'build'));
 
-gulp.task('serve', gulp.series(gulp.parallel('scripts', 'styles'), watch, 'browser-sync'));
+gulp.task('serve', gulp.series(gulp.parallel('scripts:watch', 'styles'), watch, 'browser-sync'));
 gulp.task('serve:dist', gulp.series('default', 'browser-sync:dist'));
 gulp.task('default', gulp.series('clean', 'build'));
 

@@ -4,7 +4,7 @@ import gulp from 'gulp';
 import { protractor as protractor } from 'gulp-protractor';
 import browserSync from 'browser-sync';
 
-import * as conf from './gulpconf';
+import * as conf from '../conf/gulp.conf';
 
 const argv = process.argv.slice(3); // forward args to protractor
 

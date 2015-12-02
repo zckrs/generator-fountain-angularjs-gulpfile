@@ -5,7 +5,7 @@ import del from 'del';
 // import mainBowerFiles from 'main-bower-files';
 import gulpLoadPlugins from 'gulp-load-plugins';
 
-import * as conf from './gulpconf';
+import * as conf from '../conf/gulp.conf';
 
 const $ = gulpLoadPlugins();
 
