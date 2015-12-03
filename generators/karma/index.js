@@ -29,7 +29,9 @@ module.exports = generators.Base.extend({
           'karma-jasmine': '^0.3.6',
           'karma-junit-reporter': '^0.3.8',
           'karma-phantomjs-launcher': '^0.2.1',
-          phantomjs: '^1.9.19'
+          'karma-phantomjs-shim': '^1.1.2',
+          phantomjs: '^1.9.19',
+          'isparta-instrumenter-loader': '^1.0.0'
         },
         scripts: {
           test: 'gulp karma:single-run'
@@ -92,6 +94,15 @@ module.exports = generators.Base.extend({
         this.destinationPath('conf/karma-auto.conf.js'),
         options
       );
+    },
+
+    src: function () {
+      if (this.props.dependencyManagement === 'commonjs') {
+        this.fs.copyTpl(
+          this.templatePath('src/index.spec.js'),
+          this.destinationPath('src/index.spec.js')
+        );
+      }
     }
   }
 });

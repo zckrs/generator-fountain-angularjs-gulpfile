@@ -1,17 +1,6 @@
-// For instructions about this file refer to
-// webpack and webpack-hot-middleware documentation
-var webpack = require('webpack');
-var conf = require('./gulp.conf');
-var path = require('path');
-
 module.exports = {
   debug: true,
   devtool: 'inline-source-map',
-
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.NoErrorsPlugin()
-  ],
 
   module: {
     preLoaders: [{ test: /\.js$/, exclude: /node_modules/, loader: 'eslint'}],

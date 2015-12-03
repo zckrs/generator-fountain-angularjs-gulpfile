@@ -6,7 +6,7 @@ var conf = require('./gulp.conf');
 <% if (framework === 'angular1') { -%>
 var pathSrcHtml = path.join(conf.paths.src, '/**/*.html');
 <% } -%>
-var pathSrcJs = path.join(conf.paths.src, '/**/*.spec.*js');
+var pathSrcJs = path.join(conf.paths.src, 'index.spec.js');
 
 var preprocessors = [];
 <% if (framework === 'angular1') { -%>
@@ -22,6 +22,7 @@ module.exports = function (config) {
       require('karma-jasmine'),
       require('karma-junit-reporter'),
       require('karma-phantomjs-launcher'),
+      require('karma-phantomjs-shim'),
 <% if (framework === 'angular1') { -%>
       require('karma-ng-html2js-preprocessor'),
 <% } -%>
@@ -66,7 +67,7 @@ module.exports = function (config) {
 <% } -%>
     logLevel: 'WARN',
 
-    frameworks: ['jasmine'],
+    frameworks: ['phantomjs-shim', 'jasmine'],
 
     junitReporter: { outputDir: 'test-reports' },
 

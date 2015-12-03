@@ -1,7 +1,7 @@
-import index from './index';
+import { toto } from './index';
 
 describe('index', function() {
   it('should work', function() {
-    expect(true).toBeTruthy();
+    expect(toto === 'toto').toBeTruthy();
   });
 });

@@ -9,3 +9,7 @@ angular
       template: '<h1>Hello World!</h1>'
     }
   });
+<% if (modules) { -%>
+
+export const toto = 'toto';
+<% } -%>
