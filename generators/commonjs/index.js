@@ -37,6 +37,14 @@ module.exports = generators.Base.extend({
         });
       }
 
+      if (this.props.framework === 'angular1') {
+        _.merge(newPkg, {
+          devDependencies: {
+            'ng-annotate-loader': '^0.0.10'
+          }
+        });
+      }
+
       handleJson.mergeJson.call(this, 'package.json', newPkg);
     },
 

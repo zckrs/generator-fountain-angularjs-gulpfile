@@ -1,15 +1,14 @@
 <% if (modules) { -%>
 import angular from 'angular';
 
-<% } -%>
-angular
-  .module('app', [])
-  .directive('helloApp', () => {
-    return {
-      template: '<h1>Hello World!</h1>'
-    }
-  });
-<% if (modules) { -%>
+import { hello } from './app/hello.component';
 
-export const toto = 'toto';
+export const app = 'app';
+
+angular
+  .module(app, [])
+  .component('hello', hello);
+<% } else { -%>
+angular
+  .module('app', []);
 <% } -%>

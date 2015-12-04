@@ -25,6 +25,7 @@ module.exports = generators.Base.extend({
           karma: '^0.13.14',
           'karma-coverage': '^0.5.3',
           'karma-jasmine': '^0.3.6',
+          'jasmine-core': '^2.4.1',
           'karma-junit-reporter': '^0.3.8',
           'karma-phantomjs-launcher': '^0.2.1',
           'karma-phantomjs-shim': '^1.1.2',
@@ -39,6 +40,7 @@ module.exports = generators.Base.extend({
       if (this.props.framework === 'angular1') {
         _.merge(newPkg, {
           devDependencies: {
+            'angular-mocks': '^1.5.0-beta.2',
             'gulp-ng-annotate': '^1.1.0',
             'karma-angular-filesort': '^1.0.0',
             'karma-ng-html2js-preprocessor': '^0.2.0'
@@ -98,7 +100,8 @@ module.exports = generators.Base.extend({
       if (this.props.dependencyManagement === 'commonjs') {
         this.fs.copyTpl(
           this.templatePath('src/index.spec.js'),
-          this.destinationPath('src/index.spec.js')
+          this.destinationPath('src/index.spec.js'),
+          { framework: this.props.framework }
         );
       }
     }

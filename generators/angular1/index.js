@@ -25,7 +25,7 @@ module.exports = generators.Base.extend({
     package: function () {
       handleJson.mergeJson.call(this, 'package.json', {
         dependencies: {
-          angular: '^1.4.8'
+          angular: '^1.5.0-beta.2'
         }
       });
     },
