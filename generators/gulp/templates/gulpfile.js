@@ -1,11 +1,9 @@
-/*eslint-env es6 */
+const path = require('path');
 
-import { join as pathsJoin } from 'path';
+const gulp = require('gulp');
+const HubRegistry = require('gulp-hub');
 
-import gulp from 'gulp';
-import HubRegistry from 'gulp-hub';
-
-import * as conf from './conf/gulp.conf';
+const conf = require('./conf/gulp.conf');
 
 // Load some files into the registry
 const hub = new HubRegistry([
@@ -30,12 +28,12 @@ gulp.task('default', gulp.series('clean', 'build'));
 function watch(done) {
   gulp.watch([
 <% if (cssPreprocessor !== 'css') { -%>
-    pathsJoin(conf.paths.src, '/app/**/*.<%- cssPreprocessor %>'),
+    path.join(conf.paths.src, '/app/**/*.<%- cssPreprocessor %>'),
 <% } -%>
-    pathsJoin(conf.paths.src, '/app/**/*.css')
+    path.join(conf.paths.src, '/app/**/*.css')
   ], gulp.series('styles'));
 
-  gulp.watch(pathsJoin(conf.paths.src, '/app/**/*.js'), gulp.series('scripts'));
+  gulp.watch(path.join(conf.paths.src, '/app/**/*.js'), gulp.series('scripts'));
 
   done();
 }

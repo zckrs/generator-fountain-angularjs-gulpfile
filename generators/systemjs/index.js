@@ -1,8 +1,6 @@
-'use strict';
-
-var _ = require('lodash');
-var handleJson = require('../../src/file-utils');
-var generators = require('yeoman-generator');
+const _ = require('lodash');
+const handleJson = require('../../src/file-utils');
+const generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
   constructor: function () {

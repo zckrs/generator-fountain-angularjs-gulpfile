@@ -1,19 +1,17 @@
-'use strict';
+const path = require('path');
+const conf = require('./gulp.conf');
 
-var path = require('path');
-var conf = require('./gulp.conf');
-
+const pathSrcJs = path.join(conf.paths.src, 'index.spec.js');
 <% if (framework === 'angular1') { -%>
-var pathSrcHtml = path.join(conf.paths.src, '/**/*.html');
+const pathSrcHtml = path.join(conf.paths.src, '/**/*.html');
 <% } -%>
-var pathSrcJs = path.join(conf.paths.src, 'index.spec.js');
 
-var preprocessors = [];
-<% if (framework === 'angular1') { -%>
-preprocessors[pathSrcHtml] = ['ng-html2js'];
-<% } -%>
+const preprocessors = {};
 <% if (dependencyManagement === 'commonjs') { -%>
 preprocessors[pathSrcJs] = ['webpack'];
+<% } -%>
+<% if (framework === 'angular1') { -%>
+preprocessors[pathSrcHtml] = ['ng-html2js'];
 <% } -%>
 
 module.exports = function (config) {
@@ -44,7 +42,7 @@ module.exports = function (config) {
     autoWatch: true,
 <% } -%>
 
-    preprocessors: preprocessors,
+    preprocessors,
 
 <% if (singleRun) { -%>
     reporters: ['progress', 'junit', 'coverage'],
@@ -67,11 +65,11 @@ module.exports = function (config) {
 <% } -%>
     logLevel: 'WARN',
 
-    frameworks: ['phantomjs-shim', 'jasmine'],
+    frameworks: [ 'phantomjs-shim', 'jasmine' ],
 
     junitReporter: { outputDir: 'test-reports' },
 
-    browsers: ['PhantomJS']
+    browsers: [ 'PhantomJS' ]
   };
 
   config.set(configuration);

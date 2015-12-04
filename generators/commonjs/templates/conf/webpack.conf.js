@@ -1,8 +1,8 @@
 // For instructions about this file refer to
 // webpack and webpack-hot-middleware documentation
-var webpack = require('webpack');
-var conf = require('./gulp.conf');
-var path = require('path');
+const webpack = require('webpack');
+const conf = require('./gulp.conf');
+const path = require('path');
 
 module.exports = {
   debug: true,
@@ -12,10 +12,10 @@ module.exports = {
   entry: [
     'webpack/hot/dev-server',
     'webpack-hot-middleware/client',
-    './' + path.join(conf.paths.src, 'index')
+    `./${path.join(conf.paths.src, 'index')}`
   ],
 <% } else { -%>
-  entry: './' + path.join(conf.paths.src, 'index'),
+  entry: `./${path.join(conf.paths.src, 'index')}`,
 <% } -%>
 
   output: {

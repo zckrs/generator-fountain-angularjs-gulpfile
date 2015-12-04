@@ -1,32 +1,34 @@
-import { join as pathsJoin } from 'path';
+const path = require('path');
 
-import gulp from 'gulp';
-import browserSync from 'browser-sync';
-import gulpLoadPlugins from 'gulp-load-plugins';
+const gulp = require('gulp');
+const browserSync = require('browser-sync');
+const sourcemaps = require('gulp-sourcemaps');
+<% if (cssPreprocessor == 'scss') { -%>
+const sass = require('gulp-sass');
+<% } -%>
+const autoprefixer = require('gulp-autoprefixer');
 
-import * as conf from '../conf/gulp.conf';
-
-const $ = gulpLoadPlugins();
+const conf = require('../conf/gulp.conf');
 
 gulp.task('styles', styles);
 
 <% if (cssPreprocessor !== 'css') { -%>
 function styles() {
 <%   if (cssPreprocessor == 'scss') { -%>
-  let sassOptions = {
+  const sassOptions = {
     style: 'expanded'
   };
-<% } -%>
+<%   } -%>
 
   return gulp.src([
-    pathsJoin(conf.paths.src, '/app/index.<%- cssPreprocessor %>')
+    path.join(conf.paths.src, '/app/index.<%- cssPreprocessor %>')
   ])
-    .pipe($.sourcemaps.init())
+    .pipe(sourcemaps.init())
 <%   if (cssPreprocessor == 'scss') { -%>
-    .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))
-<% } -%>
-    .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
-    .pipe($.sourcemaps.write())
+    .pipe(sass(sassOptions)).on('error', conf.errorHandler('Sass'))
+<%   } -%>
+    .pipe(autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest(conf.paths.tmp))
     .pipe(browserSync.stream());
 }

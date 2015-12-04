@@ -31,10 +31,11 @@ module.exports = generators.Base.extend({
 
       handleJson.mergeJson.call(this, 'package.json', {
         devDependencies: {
-          'gulp-babel': '6.1.0',
+          'gulp-babel': '^6.1.0',
           'gulp-inject': '^3.0.0',
           'main-bower-files': '^2.9.0',
-          wiredep: '^2.2.2'
+          wiredep: '^2.2.2',
+          'gulp-angular-filesort': '^1.1.1'
         }
       });
 
@@ -51,19 +52,15 @@ module.exports = generators.Base.extend({
 
     gulp: function () {
       this.fs.copyTpl(
-        this.templatePath('gulpfile.babel.js'),
-        this.destinationPath('gulpfile.babel.js'),
-        {
-          cssPreprocessor: this.props.cssPreprocessor
-        }
+        this.templatePath('gulpfile.js'),
+        this.destinationPath('gulpfile.js'),
+        { cssPreprocessor: this.props.cssPreprocessor }
       );
 
       this.fs.copyTpl(
         this.templatePath('gulp_tasks'),
         this.destinationPath('gulp_tasks'),
-        {
-          cssPreprocessor: this.props.cssPreprocessor
-        }
+        { cssPreprocessor: this.props.cssPreprocessor }
       );
     },
 

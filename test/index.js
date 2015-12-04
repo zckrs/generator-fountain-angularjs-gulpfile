@@ -21,7 +21,7 @@ describe('fountain-angular-gulpfile:app', () => {
       assert.file([
         '.yo-rc.json',
         'package.json',
-        'gulpfile.babel.js',
+        'gulpfile.js',
         'gulp_tasks/browserSync.js',
         'gulp_tasks/build.js',
         'gulp_tasks/gulpconf.js',
@@ -75,9 +75,9 @@ describe('fountain-angular-gulpfile:app', () => {
       });
     });
 
-    it('should fill gulpfile.babel.js', () => {
+    it('should fill gulpfile.js', () => {
       // TODO complete assert on gulpfile and tasks
-      assert.fileContent('gulpfile.babel.js', 'gulp.registry(hub);');
+      assert.fileContent('gulpfile.js', 'gulp.registry(hub);');
     });
 
 

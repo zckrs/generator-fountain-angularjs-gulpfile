@@ -1,16 +1,25 @@
-import { join as pathsJoin } from 'path';
+const path = require('path');
 
-import gulp from 'gulp';
-import gutil from 'gulp-util';
+const gulp = require('gulp');
+const gutil = require('gulp-util');
 
-import * as conf from '../conf/gulp.conf';
+const conf = require('../conf/gulp.conf');
 
-import webpack from 'webpack';
-import webpackConf from '../conf/webpack.conf';
+const webpack = require('webpack');
+const webpackConf = require('../conf/webpack.conf');
+
 <% if (framework !== 'react') { -%>
 
-import browserSync from 'browser-sync';
+const browserSync = require('browser-sync');
 <% } -%>
+
+gulp.task('scripts', done => {
+  webpackWrapper(false, false, done);
+});
+
+gulp.task('scripts:watch', done => {
+  webpackWrapper(true, false, done);
+});
 
 function webpackWrapper(watch, test, done) {
   var webpackBundler = webpack(webpackConf);
@@ -41,14 +50,6 @@ function webpackWrapper(watch, test, done) {
     webpackBundler.watch(200, webpackChangeHandler);
   } else {
     webpackBundler.run(webpackChangeHandler);
+    done();
   }
 }
-
-gulp.task('scripts', function (done) {
-  webpackWrapper(false, false);
-  done();
-});
-
-gulp.task('scripts:watch', function (done) {
-  webpackWrapper(true, false, done);
-});

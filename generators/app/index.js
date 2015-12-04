@@ -1,7 +1,5 @@
-'use strict';
-
-var _ = require('lodash');
-var generators = require('yeoman-generator');
+const _ = require('lodash');
+const generators = require('yeoman-generator');
 
 module.exports = generators.Base.extend({
   constructor: function () {
@@ -27,9 +25,9 @@ module.exports = generators.Base.extend({
 
   prompting: {
     askFor: function () {
-      var done = this.async();
+      const done = this.async();
 
-      var prompts = [{
+      const prompts = [{
         when: !this.props.framework,
         type: 'list',
         name: 'framework',
@@ -111,11 +109,11 @@ module.exports = generators.Base.extend({
         ]
       }];
 
-      this.prompt(prompts, function (props) {
+      this.prompt(prompts, props => {
         this.props = _.merge(this.props, props);
 
         done();
-      }.bind(this));
+      });
     }
   },
 
