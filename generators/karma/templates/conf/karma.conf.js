@@ -30,7 +30,16 @@ module.exports = function (config) {
 
     basePath: '../',
 
+<% if (framework === 'angular2') { -%>
+    files: [
+      'node_modules/reflect-metadata/Reflect.js',
+      'node_modules/zone.js/dist/zone.js',
+      'node_modules/es6-shim/es6-shim.js',
+      pathSrcJs
+    ],
+<% } else { -%>
     files: [ pathSrcJs ],
+<% } -%>
 
 <% if (singleRun) { -%>
     singleRun: true,

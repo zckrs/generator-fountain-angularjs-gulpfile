@@ -48,6 +48,14 @@ module.exports = generators.Base.extend({
         });
       }
 
+      if (this.props.framework === 'angular2') {
+        _.merge(newPkg, {
+          devDependencies: {
+            'es6-shim': '^0.33.13'
+          }
+        });
+      }
+
       if (this.props.dependencyManagement === 'commonjs') {
         _.merge(newPkg, {
           devDependencies: {

@@ -1,12 +1,5 @@
-import { bootstrap, Component } from 'angular2/angular2';
+import { bootstrap } from 'angular2/angular2';
 
-var AppComponent =
-  Component({
-    selector: 'hello-app',
-    template: '<h1>Hello World!</h1>'
-  })
-  .Class({
-    constructor: function () { }
-  });
+import { Hello } from './app/hello';
 
-bootstrap(AppComponent);
+bootstrap(Hello);
