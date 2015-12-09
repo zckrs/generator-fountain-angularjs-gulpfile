@@ -1,19 +1,14 @@
-import { join as pathsJoin } from 'path';
+const path = require('path');
 
-import gulp from 'gulp';
-import babel from 'gulp-babel';
-import eslint from 'gulp-eslint';
+const gulp = require('gulp');
+const eslint = require('gulp-eslint');
 
-import * as conf from './gulpconf';
+const conf = require('../conf/gulp.conf');
 
 gulp.task('scripts', scripts);
 
 function scripts() {
-  return gulp.src(pathsJoin(conf.paths.src, '/**/*.js'))
+  return gulp.src(path.join(conf.paths.src, '/**/*.js'))
     .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(babel({
-      plugins: ['transform-es2015-modules-systemjs']
-    }))
-    .pipe(gulp.dest(pathsJoin(conf.paths.tmp)));
+    .pipe(eslint.format());
 }

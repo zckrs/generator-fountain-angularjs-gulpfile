@@ -18,22 +18,26 @@ module.exports = generators.Base.extend({
 
   writing: {
     package: function () {
-      handleJson.updateJson.call(this, 'package.json', function (packageJson) {
+      handleJson.updateJson.call(this, 'package.json', (packageJson) => {
         packageJson.jspm = {
           dependencies: packageJson.dependencies
         };
         _.forEach(packageJson.jspm.dependencies, function (version, name) {
-          packageJson.jspm.dependencies[name] = 'npm:' + name + '@' + version;
+          packageJson.jspm.dependencies[name] = `npm:${name}@${version}`;
         });
         delete packageJson.dependencies;
+        if (this.props.framework === 'angular1') {
+          packageJson.jspm.devDependencies = {
+            'angular-mocks': `npm:angular-mocks@${packageJson.devDependencies['angular-mocks']}`
+          };
+          delete packageJson.devDependencies['angular-mocks'];
+        }
         return packageJson;
       });
 
       handleJson.mergeJson.call(this, 'package.json', {
         devDependencies: {
-          jspm: '0.16.15',
-          'gulp-babel': '6.1.0',
-          'babel-plugin-transform-es2015-modules-systemjs': '6.1.18'
+          jspm: '0.16.15'
         }
       });
     },

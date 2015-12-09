@@ -21,7 +21,11 @@ gulp.registry(hub);
 
 gulp.task('build', gulp.series('other', 'build'));
 
+<% if (dependencyManagement === 'commonjs') { -%>
 gulp.task('serve', gulp.series(gulp.parallel('scripts:watch', 'styles'), watch, 'browser-sync'));
+<% } else { -%>
+gulp.task('serve', gulp.series(gulp.parallel('scripts', 'styles'), watch, 'browser-sync'));
+<% } -%>
 gulp.task('serve:dist', gulp.series('default', 'browser-sync:dist'));
 gulp.task('default', gulp.series('clean', 'build'));
 

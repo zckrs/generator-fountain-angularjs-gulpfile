@@ -29,8 +29,7 @@ module.exports = generators.Base.extend({
           'karma-junit-reporter': '^0.3.8',
           'karma-phantomjs-launcher': '^0.2.1',
           'karma-phantomjs-shim': '^1.1.2',
-          phantomjs: '^1.9.19',
-          'isparta-instrumenter-loader': '^1.0.0'
+          phantomjs: '^1.9.19'
         },
         scripts: {
           test: 'gulp karma:single-run'
@@ -59,7 +58,16 @@ module.exports = generators.Base.extend({
       if (this.props.dependencyManagement === 'commonjs') {
         _.merge(newPkg, {
           devDependencies: {
-            'karma-webpack': '^1.7.0'
+            'karma-webpack': '^1.7.0',
+            'isparta-instrumenter-loader': '^1.0.0'
+          }
+        });
+      }
+
+      if (this.props.dependencyManagement === 'systemjs') {
+        _.merge(newPkg, {
+          devDependencies: {
+            'karma-jspm': '^2.0.2'
           }
         });
       }

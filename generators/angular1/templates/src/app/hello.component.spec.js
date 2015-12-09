@@ -1,5 +1,6 @@
 <% if (modules) { -%>
 import angular from 'angular';
+import angularMock from 'angular-mocks';
 import { app } from '../index';
 <% } -%>
 
