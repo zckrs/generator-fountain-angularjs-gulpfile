@@ -42,13 +42,6 @@ module.exports = generators.Base.extend({
       });
     },
 
-    gulp: function () {
-      this.fs.copyTpl(
-        this.templatePath('gulp_tasks'),
-        this.destinationPath('gulp_tasks')
-      );
-    },
-
     config: function () {
       this.fs.copyTpl(
         this.templatePath('config.js'),

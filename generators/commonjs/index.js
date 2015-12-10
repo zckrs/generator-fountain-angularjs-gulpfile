@@ -21,7 +21,7 @@ module.exports = generators.Base.extend({
       var newPkg = {
         devDependencies: {
           webpack: '^1.12.9',
-          'eslint-loader': '^1.1.1',
+          // 'eslint-loader': '^1.1.1',
           'babel-loader': '^6.2.0',
           'babel-preset-react': '^6.1.18'
         }

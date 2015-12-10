@@ -42,11 +42,11 @@ module.exports = generators.Base.extend({
         }
       );
 
-      if (this.props.dependencyManagement === 'inject') {
-        handleJson.mergeJson.call(this, '.eslintrc', {
-          globals: { angular: true }
-        });
-      }
+      // if (this.props.dependencyManagement === 'inject') {
+      //   handleJson.mergeJson.call(this, '.eslintrc', {
+      //     globals: { angular: true }
+      //   });
+      // }
     }
   },
 

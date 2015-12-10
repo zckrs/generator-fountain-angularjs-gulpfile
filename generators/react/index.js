@@ -48,17 +48,17 @@ module.exports = generators.Base.extend({
         presets: ['react']
       });
 
-      var eslint = {
-        plugins: ['react'],
-        ecmaFeatures: { jsx: true },
-        rules: { 'react/jsx-uses-react': 1 }
-      };
-
-      if (this.props.dependencyManagement === 'inject') {
-        eslint.globals = { React: true, ReactDOM: true };
-      }
-
-      handleJson.mergeJson.call(this, '.eslintrc', eslint);
+      // var eslint = {
+      //   plugins: ['react'],
+      //   ecmaFeatures: { jsx: true },
+      //   rules: { 'react/jsx-uses-react': 1 }
+      // };
+      //
+      // if (this.props.dependencyManagement === 'inject') {
+      //   eslint.globals = { React: true, ReactDOM: true };
+      // }
+      //
+      // handleJson.mergeJson.call(this, '.eslintrc', eslint);
     }
   },
 

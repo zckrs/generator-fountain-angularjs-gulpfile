@@ -34,7 +34,7 @@ module.exports = generators.Base.extend({
           del: '^2.0.2',
           gulp: 'gulpjs/gulp#4.0',
           'gulp-autoprefixer': '^3.1.0',
-          'gulp-eslint': '^1.0.0',
+          // 'gulp-eslint': '^1.0.0',
           'gulp-filter': '^3.0.1',
           'gulp-flatten': '^0.2.0',
           'gulp-hub': 'frankwallis/gulp-hub#registry-init',
@@ -107,12 +107,12 @@ module.exports = generators.Base.extend({
         presets: ['es2015']
       });
 
-      handleJson.mergeJson.call(this, '.eslintrc', {
-        extends: 'eslint:recommended',
-        env: { es6: true, browser: true, jasmine: true },
-        ecmaFeatures: { modules: true },
-        globals: { module: true, inject: true }
-      });
+      // handleJson.mergeJson.call(this, '.eslintrc', {
+      //   extends: 'eslint:recommended',
+      //   env: { es6: true, browser: true, jasmine: true },
+      //   ecmaFeatures: { modules: true },
+      //   globals: { module: true, inject: true }
+      // });
     }
   },
 
@@ -141,6 +141,12 @@ module.exports = generators.Base.extend({
       'fountain-gulpfile:' + this.props.dependencyManagement,
       { options },
       { local: require.resolve('../' + this.props.dependencyManagement) }
+    );
+
+    this.composeWith(
+      'fountain-gulpfile:eslint',
+      { options },
+      { local: require.resolve('../eslint') }
     );
   }
 });

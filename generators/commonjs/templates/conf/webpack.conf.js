@@ -1,5 +1,3 @@
-// For instructions about this file refer to
-// webpack and webpack-hot-middleware documentation
 const webpack = require('webpack');
 const conf = require('./gulp.conf');
 const path = require('path');
@@ -32,7 +30,6 @@ module.exports = {
   ],
 
   module: {
-    preLoaders: [{ test: /\.js$/, exclude: /node_modules/, loader: 'eslint'}],
 <% if (framework === 'react') { -%>
     loaders: [{ test: /\.js$/, exclude: /node_modules/, loaders: ['react-hot', 'babel']}]
 <% } else if (framework === 'angular1') { -%>
