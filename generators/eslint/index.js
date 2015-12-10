@@ -56,7 +56,7 @@ module.exports = generators.Base.extend({
       if (this.props.dependencyManagement === 'inject') {
         if (this.props.framework === 'react') {
           _.merge(eslint, {
-            globals: { React: true, ReactDom: true }
+            globals: { React: true, ReactDOM: true }
           });
         }
 

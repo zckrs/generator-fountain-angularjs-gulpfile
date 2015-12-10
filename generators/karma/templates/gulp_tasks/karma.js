@@ -3,8 +3,13 @@ const path = require('path');
 const gulp = require('gulp');
 const karma = require('karma');
 
+<% if (dependencyManagement === 'inject') { -%>
+gulp.task('karma:single-run', gulp.series('scripts', karmaSingleRun));
+gulp.task('karma:auto-run', gulp.series('watch', karmaAutoRun));
+<% } else { -%>
 gulp.task('karma:single-run', karmaSingleRun);
 gulp.task('karma:auto-run', karmaAutoRun);
+<% } -%>
 
 function karmaFinishHandler(done) {
   return failCount => {

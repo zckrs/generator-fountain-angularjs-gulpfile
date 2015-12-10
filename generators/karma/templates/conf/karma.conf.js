@@ -1,5 +1,8 @@
 const path = require('path');
 const conf = require('./gulp.conf');
+<% if (dependencyManagement === 'inject') { -%>
+const wiredep = require('wiredep');
+<% } -%>
 
 <% if (dependencyManagement === 'commonjs') { -%>
 const pathSrcJs = path.join(conf.paths.src, 'index.spec.js');
@@ -16,10 +19,46 @@ preprocessors[pathSrcJs] = ['webpack'];
 preprocessors[pathSrcHtml] = ['ng-html2js'];
 <% } -%>
 
+<% if (dependencyManagement === 'inject') { -%>
+function listFiles() {
+  var wiredepOptions = Object.assign({}, conf.wiredep, {
+<% if (framework === 'react') { -%>
+    overrides: {
+      react: { main: [ 'react-with-addons.js' ] }
+    },
+<% } -%>
+    dependencies: true,
+    devDependencies: true
+  });
+
+  var patterns = [
+    ...wiredep(wiredepOptions).js,
+<% if (framework === 'angular1') { -%>
+    path.join(conf.paths.tmp, '/**/*.js'),
+    pathSrcHtml
+<% } -%>
+<% if (framework === 'react') { -%>
+    path.join(conf.paths.tmp, '/app/**/*.js')
+<% } -%>
+  ];
+
+  var files = patterns.map(pattern => ({ pattern: pattern }));
+  files.push({
+    pattern: path.join(conf.paths.src, '/assets/**/*'),
+    included: false,
+    served: true,
+    watched: false
+  });
+  return files;
+}
+
+<% } -%>
 module.exports = function (config) {
   var configuration = {
 <% if (dependencyManagement === 'systemjs') { -%>
     frameworks: [ 'phantomjs-shim', 'jspm', 'jasmine' ],
+<% } else if (dependencyManagement === 'inject' && framework === 'angular1') { -%>
+    frameworks: [ 'phantomjs-shim', 'jasmine', 'angular-filesort' ],
 <% } else { -%>
     frameworks: [ 'phantomjs-shim', 'jasmine' ],
 <% } -%>
@@ -39,6 +78,10 @@ module.exports = function (config) {
 <%   } else { -%>
     files: [ pathSrcJs ],
 <%   } -%>
+
+<% } -%>
+<% if (dependencyManagement === 'inject') { -%>
+    files: listFiles(),
 
 <% } -%>
 <% if (singleRun) { -%>
@@ -65,6 +108,11 @@ module.exports = function (config) {
       moduleName: 'app'
     },
 
+<%   if (dependencyManagement === 'inject') { -%>
+    angularFilesort: {
+      whitelist: [ path.join(conf.paths.tmp, '/**/!(*.html|*.spec|*.mock).js') ]
+    },
+<%   } -%>
 <% } -%>
 <% if (dependencyManagement === 'commonjs') { -%>
     webpack: require('./webpack-test.conf.js'),
@@ -107,6 +155,9 @@ module.exports = function (config) {
 <% } -%>
 <% if (dependencyManagement === 'systemjs') { -%>
       require('karma-jspm'),
+<% } -%>
+<% if (dependencyManagement === 'inject' && framework === 'angular1') { -%>
+      require('karma-angular-filesort'),
 <% } -%>
       require('karma-coverage')
     ]

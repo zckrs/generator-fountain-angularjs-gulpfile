@@ -21,7 +21,7 @@ module.exports = generators.Base.extend({
 
   writing: {
     package: function () {
-      var dependencies;
+      let dependencies, devDependencies = {};
 
       handleJson.updateJson.call(this, 'package.json', function (packageJson) {
         dependencies = packageJson.dependencies;
@@ -43,20 +43,19 @@ module.exports = generators.Base.extend({
         delete dependencies['react-dom'];
       }
 
+      if (this.props.framework === 'angular1') {
+        devDependencies['angular-mocks'] = dependencies.angular;
+      }
+
       handleJson.mergeJson.call(this, 'bower.json', {
         name: 'fountain-inject',
         version: '0.0.1',
-        dependencies: dependencies
+        dependencies: dependencies,
+        devDependencies: devDependencies
       });
     },
 
     gulp: function () {
-      this.fs.copyTpl(
-        this.templatePath('gulpfile.js'),
-        this.destinationPath('gulpfile.js'),
-        { cssPreprocessor: this.props.cssPreprocessor }
-      );
-
       this.fs.copyTpl(
         this.templatePath('gulp_tasks'),
         this.destinationPath('gulp_tasks'),

@@ -28,7 +28,7 @@ module.exports = generators.Base.extend({
         }
       };
 
-      if (this.props.framework === 'react') {
+      if (this.props.dependencyManagement === 'commonjs' && this.props.framework === 'react') {
         _.merge(newPkg, {
           devDependencies: {
             'webpack-dev-middleware': '^1.4.0',

@@ -45,6 +45,15 @@ module.exports = generators.Base.extend({
             'karma-ng-html2js-preprocessor': '^0.2.0'
           }
         });
+
+        if (this.props.dependencyManagement === 'inject') {
+          _.merge(newPkg, {
+            devDependencies: {
+              'karma-angular-filesort': '^1.0.1'
+            }
+          });
+
+        }
       }
 
       if (this.props.framework === 'angular2') {
@@ -78,7 +87,8 @@ module.exports = generators.Base.extend({
     gulp: function () {
       this.fs.copyTpl(
         this.templatePath('gulp_tasks'),
-        this.destinationPath('gulp_tasks')
+        this.destinationPath('gulp_tasks'),
+        { dependencyManagement: this.props.dependencyManagement }
       );
     },
 
